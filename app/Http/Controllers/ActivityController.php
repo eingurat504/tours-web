@@ -102,27 +102,50 @@ class BookingController extends Controller
         ]);
     }
 
-    /**
+     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function edit($activityId)
     {
-        //
+
+        $activity = Activity::find($activityId);
+
+        return view('activities.edit', [
+            'activity' =>  $activity
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Booking  $booking
+     * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, $activityId)
     {
         //
+        $this->validate($request, [
+            'activity_name' => 'required',
+            'duration' => 'required',
+            'description' => 'required',
+            'amount' => 'nullable',
+        ]);
+
+        $activity = Activity::find($activityId);
+
+        $activity->activity_name = $request->input('activity_name' ,  $activity->activity_name);
+        $activity->duration = $request->input('duration', $activity->duration);
+        $activity->description = $request->input('description', $activity->description);
+        $activity->amount = $request->input('amount', $activity->amount);
+        $activity->save();
+
+        // flash("{$booking->traveller_name} created.")->success();
+
+        return redirect()->route('activities.index');
     }
 
     /**
