@@ -7,24 +7,32 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+     /**
+     * Display bookings.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BookingsDataTable $dataTable)
     {
-        //
+        return $dataTable->render('bookings.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show create page.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
         //
+        // $this->authorize('create', [Booking::class]);
+        $packages = Package::get();
+        $activities = Activity::get();
+    
+        return view('bookings.create',[
+            'packages' => $packages,
+            'activities' => $activities
+        ]);
     }
 
     /**
