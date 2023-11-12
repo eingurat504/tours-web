@@ -178,6 +178,57 @@ class BookingController extends Controller
         ]);
     }
 
+        /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function showReserve(Request $request, $booking)
+    {
+
+        $booking = Booking::find($booking);
+        $activities = Activity::get();
+        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
+        $booked = '';
+
+        foreach ($booking->activity_ids as $activity) {
+            foreach ($activities as $booked_activity) {
+                if ($booked_activity['id'] == $activity) {
+                    $booked .= $booked_activity->activity_name . ', ';
+                    break;
+                }
+            }
+        }
+
+        $booking['booked_activities'] = rtrim($booked, ', ');
+
+        return view('bookings.reserve', [
+            'booking' => $booking,
+            'activities'  => $booking_activities
+        ]);
+    }
+
+    /**
+     * Show edit page
+     *
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($booking)
+    {
+        
+        $booking = Booking::find($booking);
+
+        $activities = Activity::get();
+
+        return view('bookings.edit', [
+            'booking' => $booking,
+            'activities' =>  $activities
+        ]);
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
