@@ -117,30 +117,254 @@ class BookingController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      *
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function showCancel(Request $request, $booking)
     {
-        //
+
+        $booking = Booking::find($booking);
+        $activities = Activity::get();
+        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
+        $booked = '';
+
+        foreach ($booking->activity_ids as $activity) {
+            foreach ($activities as $booked_activity) {
+                if ($booked_activity['id'] == $activity) {
+                    $booked .= $booked_activity->activity_name . ', ';
+                    break;
+                }
+            }
+        }
+
+        $booking['booked_activities'] = rtrim($booked, ', ');
+
+        return view('bookings.cancel', [
+            'booking' => $booking,
+            'activities'  => $booking_activities
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function showApprove(Request $request, $booking)
+    {
+
+        $booking = Booking::find($booking);
+        $activities = Activity::get();
+        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
+        $booked = '';
+
+        foreach ($booking->activity_ids as $activity) {
+            foreach ($activities as $booked_activity) {
+                if ($booked_activity['id'] == $activity) {
+                    $booked .= $booked_activity->activity_name . ', ';
+                    break;
+                }
+            }
+        }
+
+        $booking['booked_activities'] = rtrim($booked, ', ');
+
+        return view('bookings.approve', [
+            'booking' => $booking,
+            'activities'  => $booking_activities
+        ]);
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function showReserve(Request $request, $booking)
+    {
+
+        $booking = Booking::find($booking);
+        $activities = Activity::get();
+        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
+        $booked = '';
+
+        foreach ($booking->activity_ids as $activity) {
+            foreach ($activities as $booked_activity) {
+                if ($booked_activity['id'] == $activity) {
+                    $booked .= $booked_activity->activity_name . ', ';
+                    break;
+                }
+            }
+        }
+
+        $booking['booked_activities'] = rtrim($booked, ', ');
+
+        return view('bookings.reserve', [
+            'booking' => $booking,
+            'activities'  => $booking_activities
+        ]);
+    }
+
+    /**
+     * Show edit page
+     *
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($booking)
+    {
+        
+        $booking = Booking::find($booking);
+
+        $activities = Activity::get();
+
+        return view('bookings.edit', [
+            'booking' => $booking,
+            'activities' =>  $activities
+        ]);
+
+    }
+
+
+       /**
+     * Update .
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, $booking)
     {
-        //
+
+          // $this->authorize('create bookings');
+
+          $this->validate($request, [
+            'traveller_name' => 'required',
+            'traveller_phone_no' => 'required',
+            'traveller_flight_no' => 'required',
+            'no_of_adults' => 'nullable',
+            'no_of_children' => 'nullable',
+            'no_of_people' => 'nullable',
+            'package' => 'nullable|exists:packages,id',
+            'activities' => 'required|array',
+            'activities.*' => "required|exists:activities,id",
+            'from_date' => 'sometimes|date_format:Y-m-d',
+            'to_date' => 'sometimes|date_format:Y-m-d|after:from_date'
+        ]);
+
+        $booking = Booking::find($booking);
+
+        $booking->booking_no = $request->input('booking_no',  $booking->booking_no);
+        $booking->traveller_name = $request->input('traveller_name' ,  $booking->traveller_name);
+        $booking->traveller_phone_no = $request->input('traveller_phone_no ',  $booking->traveller_phone_no);
+        $booking->traveller_flight_no = $request->input('traveller_flight_no' ,  $booking->traveller_flight_no);
+        $booking->package_id = $request->input('package',  $booking->package);
+        $booking->status = 'pending';
+        $booking->no_of_adults = $request->input('no_of_adults', $booking->no_of_adults);
+        $booking->no_of_children = $request->input('no_of_children', $booking->no_of_children);
+        $booking->activity_ids = $request->input('activities', $booking->activities);
+        $booking->no_of_people = $request->input('no_of_people', $booking->no_of_people);
+        $booking->from_date = $request->input('from_date', $booking->from_date);
+        $booking->to_date = $request->input('to_date', $booking->to_date);
+        $booking->save();
+
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Cancel Booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+        $book = Booking::findorfail($bookingId);
+
+        Booking::where('id', $bookingId)
+                ->update([
+                    'status' => 'cancelled'
+                ]);
+
+                      // flash("{$booking->traveller_name} created.")->success();
+        return redirect()->route('bookings.index');
+        
+    }
+
+        /**
+     * Approve Booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+        $booking = Booking::findorfail($bookingId);
+        
+        Booking::where('id', $bookingId)
+                  ->update([
+                      'status' => 'approved'
+                  ]);
+
+        $payment = new Payment();
+        $payment->payment_reference_no = 'PRN-'.$this->gen_paymentNumber().'-'.$this->generate_initials($name);
+        $payment->booking_id = $booking->id;
+        $payment->status = 1; //fully paid
+        $payment->save();
+
+        // flash("{$booking->booking_no} accessed.")->success();
+
+          return redirect()->route('bookings.index');
+        
+    }
+
+          /**
+     * Reserve booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function reserve(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+          $booking = Booking::findorfail($bookingId);
+
+          Booking::where('id', $bookingId)
+                  ->update([
+                      'status' => 'reserved'
+                  ]);
+
+            $payment = new Payment();
+            $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$book->booking_no;
+            $payment->booking_id = $booking->id;
+            $payment->amount = $request->amount;
+            $payment->status = 0; // partial
+            $payment->remarks = $request->remarks;
+            $payment->save();
+  
+            // flash("{$booking->traveller_name} created.")->success();
+
+          return redirect()->route('bookings.index');
+        
+    }
+
+
+    /**
+     * Remove booking.
      *
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
@@ -148,5 +372,25 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         //
+    }
+
+
+        /**
+     * Generate Booking Number.
+     *
+     * @param int $length Desired password length
+     *
+     * @return string Random password string
+     */
+    protected function generate_booking_number($length = 6)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 }
