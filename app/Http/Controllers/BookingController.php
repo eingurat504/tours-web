@@ -229,6 +229,75 @@ class BookingController extends Controller
 
     }
 
+
+       /**
+     * Update .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $booking)
+    {
+
+          // $this->authorize('create bookings');
+
+          $this->validate($request, [
+            'traveller_name' => 'required',
+            'traveller_phone_no' => 'required',
+            'traveller_flight_no' => 'required',
+            'no_of_adults' => 'nullable',
+            'no_of_children' => 'nullable',
+            'no_of_people' => 'nullable',
+            'package' => 'nullable|exists:packages,id',
+            'activities' => 'required|array',
+            'activities.*' => "required|exists:activities,id",
+            'from_date' => 'sometimes|date_format:Y-m-d',
+            'to_date' => 'sometimes|date_format:Y-m-d|after:from_date'
+        ]);
+
+        $booking = Booking::find($booking);
+
+        $booking->booking_no = $request->input('booking_no',  $booking->booking_no);
+        $booking->traveller_name = $request->input('traveller_name' ,  $booking->traveller_name);
+        $booking->traveller_phone_no = $request->input('traveller_phone_no ',  $booking->traveller_phone_no);
+        $booking->traveller_flight_no = $request->input('traveller_flight_no' ,  $booking->traveller_flight_no);
+        $booking->package_id = $request->input('package',  $booking->package);
+        $booking->status = 'pending';
+        $booking->no_of_adults = $request->input('no_of_adults', $booking->no_of_adults);
+        $booking->no_of_children = $request->input('no_of_children', $booking->no_of_children);
+        $booking->activity_ids = $request->input('activities', $booking->activities);
+        $booking->no_of_people = $request->input('no_of_people', $booking->no_of_people);
+        $booking->from_date = $request->input('from_date', $booking->from_date);
+        $booking->to_date = $request->input('to_date', $booking->to_date);
+        $booking->save();
+
+    }
+
+    /**
+     * Cancel Booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+        $book = Booking::findorfail($bookingId);
+
+        Booking::where('id', $bookingId)
+                ->update([
+                    'status' => 'cancelled'
+                ]);
+
+                      // flash("{$booking->traveller_name} created.")->success();
+        return redirect()->route('bookings.index');
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      *
