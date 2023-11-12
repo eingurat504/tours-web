@@ -298,8 +298,73 @@ class BookingController extends Controller
         
     }
 
+        /**
+     * Approve Booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+        $booking = Booking::findorfail($bookingId);
+        
+        Booking::where('id', $bookingId)
+                  ->update([
+                      'status' => 'approved'
+                  ]);
+
+        $payment = new Payment();
+        $payment->payment_reference_no = 'PRN-'.$this->gen_paymentNumber().'-'.$this->generate_initials($name);
+        $payment->booking_id = $booking->id;
+        $payment->status = 1; //fully paid
+        $payment->save();
+
+        // flash("{$booking->booking_no} accessed.")->success();
+
+          return redirect()->route('bookings.index');
+        
+    }
+
+          /**
+     * Reserve booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function reserve(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+          $booking = Booking::findorfail($bookingId);
+
+          Booking::where('id', $bookingId)
+                  ->update([
+                      'status' => 'reserved'
+                  ]);
+
+            $payment = new Payment();
+            $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$book->booking_no;
+            $payment->booking_id = $booking->id;
+            $payment->amount = $request->amount;
+            $payment->status = 0; // partial
+            $payment->remarks = $request->remarks;
+            $payment->save();
+  
+            // flash("{$booking->traveller_name} created.")->success();
+
+          return redirect()->route('bookings.index');
+        
+    }
+
+
     /**
-     * Remove the specified resource from storage.
+     * Remove booking.
      *
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
@@ -307,5 +372,25 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         //
+    }
+
+
+        /**
+     * Generate Booking Number.
+     *
+     * @param int $length Desired password length
+     *
+     * @return string Random password string
+     */
+    protected function generate_booking_number($length = 6)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 }
