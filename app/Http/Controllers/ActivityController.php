@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * Display bookings.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ActivitiesDataTable $dataTable)
     {
-        //
+        return $dataTable->render('activities.index');
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +27,35 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        // $this->authorize('create', [Booking::class]);
+
+        return view('activities.create');
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function activities()
+    {
+        // $this->authorize('create', [Booking::class]);
+        $events = [];
+ 
+        $activities = Booking::where('status', 'pending')->get();
+
+        foreach ($activities as $activity) {
+            $events[] = [
+                // 'title' => $activity->client->name . ' ('.$activity->employee->name.')',
+                'title' => $activity->traveller_name,
+                'activities' => $activity->booking_no,
+                'start' => $activity->from_date,
+                'end' => $activity->to_date,
+            ];
+        }
+
+        return view('activities.calender', compact('events'));
     }
 
     /**
@@ -35,18 +66,40 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $this->validate($request, [
+            'activity_name' => 'required',
+            'duration' => 'required',
+            'description' => 'required',
+            'amount' => 'required',
+        ]);
+
+        $activity = new Activity();
+        $activity->activity_name = $request->activity_name;
+        $activity->duration = $request->duration;
+        $activity->description = $request->description;
+        $activity->amount = $request->amount;
+        $activity->save();
+
+        // flash("{$booking->traveller_name} created.")->success();
+
+        return redirect()->route('activities.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Booking $booking)
+    public function show($activityId)
     {
-        //
+
+        $activity = Activity::find($activityId);
+
+        return view('activities.show', [
+            'activity' => $activity
+        ]);
     }
 
     /**
