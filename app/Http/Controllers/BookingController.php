@@ -117,26 +117,65 @@ class BookingController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      *
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function showCancel(Request $request, $booking)
     {
-        //
+
+        $booking = Booking::find($booking);
+        $activities = Activity::get();
+        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
+        $booked = '';
+
+        foreach ($booking->activity_ids as $activity) {
+            foreach ($activities as $booked_activity) {
+                if ($booked_activity['id'] == $activity) {
+                    $booked .= $booked_activity->activity_name . ', ';
+                    break;
+                }
+            }
+        }
+
+        $booking['booked_activities'] = rtrim($booked, ', ');
+
+        return view('bookings.cancel', [
+            'booking' => $booking,
+            'activities'  => $booking_activities
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function showApprove(Request $request, $booking)
     {
-        //
+
+        $booking = Booking::find($booking);
+        $activities = Activity::get();
+        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
+        $booked = '';
+
+        foreach ($booking->activity_ids as $activity) {
+            foreach ($activities as $booked_activity) {
+                if ($booked_activity['id'] == $activity) {
+                    $booked .= $booked_activity->activity_name . ', ';
+                    break;
+                }
+            }
+        }
+
+        $booking['booked_activities'] = rtrim($booked, ', ');
+
+        return view('bookings.approve', [
+            'booking' => $booking,
+            'activities'  => $booking_activities
+        ]);
     }
 
     /**
