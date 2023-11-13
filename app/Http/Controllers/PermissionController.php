@@ -8,82 +8,38 @@ use Illuminate\Http\Request;
 class PermissionController extends Controller
 {
 
-    //
        /**
-     * Display payments.
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function index(PaymentsDataTable $dataTable)
+    public function __construct()
     {
-        return $dataTable->render('payments.index');
+        $this->middleware('auth');
     }
 
-    /**
-     *Show Approve Payment
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Illuminate\Validation\ValidationException
+     /**
+     * Get all permissions
      */
-    public function showApprove(Request $request, $paymentId)
-    {
-        // $this->authorize('access', [Patient::class]);
+    public function index(PermissionsDataTable $dataTable){
 
-        $payment = Payment::findorfail($paymentId);
+        // $this->authorize('viewAny', [Permission::class]);
+        // dd($dataTable->render());
 
-        $types = PaymentType::get();
+        return $dataTable->render('permissions.index');
+    }
 
-        return view('payments.approve',[
-            'payment' => $payment,
-            'types' => $types
+        /**
+     * Get Permission
+     */
+    public function show($permissionId){
+
+        $this->authorize('view', [Permission::class, $permissionId]);
+
+        $permission = Permission::findOrfail($permissionId);
+        
+        return view('permissions.show',[
+            'permission' => $permission
         ]);
-
-    }
-
-       /**
-     * Approve payment
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function approve(Request $request, $paymentId)
-    {
-        // $this->authorize('create', [User::class]);
-
-        $this->validate($request, [
-            'payment_type' => 'sometimes|integer',
-            'amount' => 'sometimes|integer',
-            'mode_of_payment' => 'sometimes',
-            'remarks' => 'sometimes',
-        ]);
-
-        $payment = Payment::with('case_note')->findOrfail($paymentId);
-
-        $payment->payment_type_id = $request->input('payment_type', $payment->payment_type_id);
-        $payment->status = 1;
-        $payment->mode_of_payment = $request->input('mode_of_payment', $payment->mode_of_payment);
-        $payment->amount = $request->input('amount', $payment->amount);
-        $payment->remarks = $request->input('remarks', $payment->remarks);
-        $payment->save();
-
-        // flash("{$payment->payment_reference_no} approved.")->success();
-
-        return redirect()->route('payments.index');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Booking $booking)
-    {
-        //
     }
 }
