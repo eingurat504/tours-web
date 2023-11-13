@@ -42,119 +42,38 @@ class PaymentController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
+       /**
+     * Approve payment
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function activities()
+    public function approve(Request $request, $paymentId)
     {
-        // $this->authorize('create', [Booking::class]);
-        $events = [];
- 
-        $activities = Booking::where('status', 'pending')->get();
+        // $this->authorize('create', [User::class]);
 
-        foreach ($activities as $activity) {
-            $events[] = [
-                // 'title' => $activity->client->name . ' ('.$activity->employee->name.')',
-                'title' => $activity->traveller_name,
-                'activities' => $activity->booking_no,
-                'start' => $activity->from_date,
-                'end' => $activity->to_date,
-            ];
-        }
-
-        return view('activities.calender', compact('events'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        
         $this->validate($request, [
-            'activity_name' => 'required',
-            'duration' => 'required',
-            'description' => 'required',
-            'amount' => 'required',
+            'payment_type' => 'sometimes|integer',
+            'amount' => 'sometimes|integer',
+            'mode_of_payment' => 'sometimes',
+            'remarks' => 'sometimes',
         ]);
 
-        $activity = new Activity();
-        $activity->activity_name = $request->activity_name;
-        $activity->duration = $request->duration;
-        $activity->description = $request->description;
-        $activity->amount = $request->amount;
-        $activity->save();
+        $payment = Payment::with('case_note')->findOrfail($paymentId);
 
-        // flash("{$booking->traveller_name} created.")->success();
+        $payment->payment_type_id = $request->input('payment_type', $payment->payment_type_id);
+        $payment->status = 1;
+        $payment->mode_of_payment = $request->input('mode_of_payment', $payment->mode_of_payment);
+        $payment->amount = $request->input('amount', $payment->amount);
+        $payment->remarks = $request->input('remarks', $payment->remarks);
+        $payment->save();
 
-        return redirect()->route('activities.index');
-    }
+        // flash("{$payment->payment_reference_no} approved.")->success();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
-    public function show($activityId)
-    {
+        return redirect()->route('payments.index');
 
-        $activity = Activity::find($activityId);
-
-        return view('activities.show', [
-            'activity' => $activity
-        ]);
-    }
-
-     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($activityId)
-    {
-
-        $activity = Activity::find($activityId);
-
-        return view('activities.edit', [
-            'activity' =>  $activity
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Activity  $activity
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $activityId)
-    {
-        //
-        $this->validate($request, [
-            'activity_name' => 'required',
-            'duration' => 'required',
-            'description' => 'required',
-            'amount' => 'nullable',
-        ]);
-
-        $activity = Activity::find($activityId);
-
-        $activity->activity_name = $request->input('activity_name' ,  $activity->activity_name);
-        $activity->duration = $request->input('duration', $activity->duration);
-        $activity->description = $request->input('description', $activity->description);
-        $activity->amount = $request->input('amount', $activity->amount);
-        $activity->save();
-
-        // flash("{$booking->traveller_name} created.")->success();
-
-        return redirect()->route('activities.index');
     }
 
     /**
