@@ -31,37 +31,50 @@ class PaymentTypeController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
+      /**
+     * Show create Payment Type
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function create()
+    {
+
+        // $this->authorize('create', [PaymentType::class]);
+        // $roles = Role::all();
+
+        return view('payment_types.create',[
+        ]);
+
+    }
+
+      /**
+     * Create Payment Type
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PaymentType  $paymentType
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PaymentType $paymentType)
-    {
-        //
-    }
+        // $this->authorize('create', [PaymentType::class]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PaymentType  $paymentType
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PaymentType $paymentType)
-    {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'sometimes',
+        ]);
+
+        $payment_type = new PaymentType();
+        $payment_type->name = $request->name;
+        $payment_type->description = $request->description;
+        $payment_type->save();
+
+        // flash("{$payment_role->name} created.")->success();
+
+        return redirect()->route('payment_types.index');
+
     }
 
     /**
