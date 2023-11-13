@@ -89,4 +89,52 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index');
 
     }
+
+       /**
+     * Show create user
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function edit(Request $request, $permissionId)
+    {
+
+        $this->authorize('update', [Permission::class, $permissionId]);
+
+        $permission = Permission::findOrfail($permissionId);
+
+        return view('permissions.edit',[
+            'permission' => $permission
+        ]);
+
+    }
+
+    /**
+     * Update Permission
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, $permissionId)
+    {
+        // $this->authorize('update', [Permission::class, $permissionId]);
+
+        $this->validate($request, [
+            'name' => 'sometimes',
+            'description' => 'sometimes',
+        ]);
+
+        $permission = Permission::findOrfail($permissionId);
+
+        $permission->name = $request->name;
+        $permission->description = $request->description;
+        $permission->save();
+
+        flash("{$permission->name} updated.")->success();
+
+        return redirect()->route('permissions.index');
+
+    }
 }
