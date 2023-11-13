@@ -77,26 +77,52 @@ class PaymentTypeController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
+     /**
+     * Show edit Payment Type
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PaymentType  $paymentType
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, PaymentType $paymentType)
+    public function edit(Request $request, $paymentTypeId)
     {
-        //
+
+        $this->authorize('update', [PaymentType::class, $paymentTypeId]);
+
+        $payment_type = PaymentType::findOrfail($paymentTypeId);
+
+        return view('payment_types.edit',[
+            'payment_type' => $payment_type
+        ]);
+
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update Payment Type
      *
-     * @param  \App\Models\PaymentType  $paymentType
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function destroy(PaymentType $paymentType)
+    public function update(Request $request, $paymentTypeId)
     {
-        //
+        $this->authorize('update', [PaymentType::class, $paymentTypeId]);
+
+        $this->validate($request, [
+            'name' => 'sometimes',
+            'description' => 'sometimes',
+        ]);
+
+        $payment_type = PaymentType::findOrfail($paymentTypeId);
+
+        $payment_type->name = $request->input('name', $payment_type->name);
+        $payment_type->description = $request->input('description', $payment_type->description);
+        $payment_type->save();
+
+        // flash("{$payment_type->name} updated.")->success();
+
+        return redirect()->route('payment_types.index');
+
     }
+    
 }
