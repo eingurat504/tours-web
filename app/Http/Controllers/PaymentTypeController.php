@@ -7,24 +7,28 @@ use Illuminate\Http\Request;
 
 class PaymentTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+     /**
+     * Display bookings.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PaymentTypesDataTable $dataTable)
     {
-        //
+        return $dataTable->render('payment_types.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+        /**
+     * Get Payment Type
      */
-    public function create()
-    {
-        //
+    public function show($paymentTypeId){
+
+        $this->authorize('view', [PaymentType::class, $paymentTypeId]);
+
+        $payment_type = PaymentType::findOrfail($paymentTypeId);
+        
+        return view('payment_types.show',[
+            'payment_type' => $payment_type
+        ]);
     }
 
     /**
