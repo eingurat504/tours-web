@@ -42,4 +42,51 @@ class PermissionController extends Controller
             'permission' => $permission
         ]);
     }
+
+
+        /**
+     * Show create permission
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function create()
+    {
+
+        // $this->authorize('create', [Permission::class]);
+    
+        return view('permissions.create',[
+            // 'roles' => $roles
+        ]);
+
+    }
+
+      /**
+     * Create Permission
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request)
+    {
+
+        // $this->authorize('create', [Permission::class]);
+
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'sometimes',
+        ]);
+
+        $permission = new Permission();
+        $permission->name = $request->name;
+        $permission->description = $request->description;
+        $permission->save();
+
+        // flash("{$permission->name} created.")->success();
+
+        return redirect()->route('permissions.index');
+
+    }
 }
