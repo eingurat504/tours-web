@@ -47,4 +47,34 @@ class RoleController extends Controller
     }
 
 
+          /**
+     * Create Role
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request)
+    {
+
+        // $this->authorize('create', [Role::class]);
+
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'sometimes',
+        ]);
+
+        $role = new Role();
+        $role->name = $request->name;
+        // $role->description = $request->description;
+        $role->save();
+
+        // flash("{$role->name} created.")->success();
+
+        return redirect()->route('roles.index');
+
+    }
+
+
 }
