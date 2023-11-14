@@ -129,4 +129,63 @@ class RoleController extends Controller
         return redirect()->route('roles.index');
     }
 
+      /**
+     * Get permissions granted to a role.
+     *
+     * @param int $roleId
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function permissionGranted($roleId)
+    {
+        $query = Permission::query();
+
+        $query->leftJoin('role_has_permissions', function ($join) use ($roleId) {
+            $join->on('permissions.id', '=', 'role_has_permissions.permission_id');
+            $join->where('role_has_permissions.role_id', '=', $roleId);
+        });
+
+        $query->select([
+            'permissions.id',
+            'permissions.name',
+            'role_has_permissions.role_id',
+        ]);
+
+        $permissions = $query->get();
+
+        $permissions = $permissions->map(function ($permission) {
+            return [
+                'id' => $permission->id,
+                'name' => $permission->name,
+                'granted' => ! is_null($permission->role_id),
+            ];
+        });
+
+        return $permissions;
+    }
+
+    /**
+     * Show the form for editing the specified role permissions.
+     *
+     * @param int $roleId
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\View\View
+     */
+    public function permissions($roleId)
+    {
+        // $this->authorize('syncPermissions', [Role::class, $roleId]);
+
+        $role = Role::findOrFail($roleId);
+
+        $role->permissions = $this->permissionGranted($roleId);
+
+        return view('roles.permissions', [
+            'role' => $role,
+        ]);
+    }
+
+
 }
