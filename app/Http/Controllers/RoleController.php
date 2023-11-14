@@ -187,5 +187,33 @@ class RoleController extends Controller
         ]);
     }
 
+        /**
+     * Synchronize permissions granted to a specified role.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $roleId
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function syncPermissions(Request $request, $roleId)
+    {
+        // $this->authorize('syncPermissions', [Role::class, $roleId]);
+
+        $role = Role::findOrFail($roleId);
+
+        $this->validate($request, [
+            'permissions' => 'required|array',
+            'permissions.*' => 'required|integer',
+        ]);
+
+        $role->permissions()->sync($request->permissions, true);
+
+        flash("{$role->name} permissions updated.")->success();
+
+        return redirect()->route('roles.index');
+    }
+
 
 }
