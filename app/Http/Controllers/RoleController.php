@@ -77,4 +77,56 @@ class RoleController extends Controller
     }
 
 
+       /**
+     * Update User
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, $roleId)
+    {
+        // $this->authorize('update', [Role::class, $roleId]);
+
+        $this->validate($request, [
+            'name' => 'sometimes',
+            'description' => 'sometimes',
+        ]);
+
+        $role = Role::findOrfail($roleId);
+
+        $role->name = $request->input('name', $role->name);
+        // $role->description = $request->input('description', $role->description);
+        $role->save();
+
+        // flash("{$role->name} updated.")->success();
+
+        return redirect()->route('roles.index');
+
+    }
+
+       /**
+     * Remove the specified role from storage.
+     *
+     * @param int $roleId
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($roleId)
+    {
+        // $this->authorize('delete', [Role::class]);
+
+        $role = Role::findOrFail($roleId);
+
+        $role->delete();
+
+        flash('Role has been deleted.')->error()->important();
+
+        return redirect()->route('roles.index');
+    }
+
 }
