@@ -13,10 +13,25 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ActivitiesDataTable $dataTable)
+    public function index(RolesDataTable $dataTable)
     {
-        return $dataTable->render('activities.index');
+        return $dataTable->render('roles.index');
 
+    }
+
+    
+    /**
+     * Get user
+     */
+    public function show($roleId){
+
+        // $this->authorize('view', [Role::class, $roleId]);
+
+        $role = Role::findOrfail($roleId);
+        
+        return view('roles.show',[
+            'role' => $role
+        ]);
     }
 
     /**
@@ -28,7 +43,7 @@ class RoleController extends Controller
     {
         // $this->authorize('create', [Booking::class]);
 
-        return view('activities.create');
+        return view('roles.create');
     }
 
 
