@@ -19,15 +19,20 @@ class UserController extends Controller
         return $dataTable->render('users.index');
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Show create page.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
         //
+        // $this->authorize('create', [Booking::class]);
+        $roles = Role::get();
+    
+        return view('users.create',[
+            'roles' => $roles
+        ]);
     }
 
     /**
