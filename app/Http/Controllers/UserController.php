@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\PaymentLog;
 use Illuminate\Http\Request;
+use App\DataTables\UsersDataTable;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+  
+          /**
+     * Display users.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        //
+        return $dataTable->render('users.index');
     }
+
 
     /**
      * Show the form for creating a new resource.
