@@ -91,29 +91,28 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
+       /**
+     * Show create user
      *
-     * @param  \App\Models\PaymentLog  $paymentLog
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(PaymentLog $paymentLog)
+    public function edit(Request $request, $userId)
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PaymentLog  $paymentLog
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PaymentLog $paymentLog)
-    {
-        //
-    }
+        // $this->authorize('update', [User::class, $userId]);
 
+        $user = User::findOrfail($userId);
+
+        $roles = Role::get();
+
+        return view('users.edit',[
+            'user' => $user,
+            'roles' =>$roles  
+        ]);
+
+    }
+    
     /**
      * Remove the specified resource from storage.
      *
