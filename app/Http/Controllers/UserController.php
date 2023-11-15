@@ -35,9 +35,8 @@ class UserController extends Controller
         ]);
     }
 
-
-         /**
-     * Create Doctor
+    /**
+     * Create User
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -77,6 +76,46 @@ class UserController extends Controller
 
     }
 
+    
+    /**
+     * Create User
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, $userId)
+    {
+
+        // $this->authorize('create', [User::class]);
+
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'sometimes',
+            'email' => 'sometimes|email',
+            'gender' => 'sometimes|boolean',
+            'roles' => 'required|exists:roles,id',
+            'phone_number' => 'sometimes|max:255',
+            'address' => 'sometimes|max:255',
+        ]);
+
+        $user = User::findorfail($userId);
+
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->assignRole([$request->roles]);
+        $user->email = $request->email;
+        $user->password = Hash::make("$request->first_name"."$request->last_name");
+        $user->save();
+
+        // flash("{$user->name} created.")->success();
+
+        return redirect()->route('users.index');
+
+    }
+
+
         /**
      * Get user
      */
@@ -112,7 +151,7 @@ class UserController extends Controller
         ]);
 
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
