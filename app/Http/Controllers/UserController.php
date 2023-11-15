@@ -41,15 +41,18 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PaymentLog  $paymentLog
-     * @return \Illuminate\Http\Response
+        /**
+     * Get user
      */
-    public function show(PaymentLog $paymentLog)
-    {
-        //
+    public function show($userId){
+
+        // $this->authorize('view', [User::class, $userId]);
+
+        $user = User::findOrfail($userId);
+        
+        return view('users.show',[
+            'user' => $user
+        ]);
     }
 
     /**
