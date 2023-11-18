@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Activity;
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -29,8 +29,8 @@ class PermissionsDataTable extends DataTable
         ->editColumn('updated_at', function ($request) {
             return $request->updated_at->format('Y-m-d H:i:s'); // human readable format
         })
-        ->addColumn('actions', function ($booking) {
-            $actions = $this->buildActions($booking);
+        ->addColumn('actions', function ($permission) {
+            $actions = $this->buildActions($permission);
 
             return '
             <div class="dropdown show">
@@ -52,10 +52,10 @@ class PermissionsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Activity $model
+     * @param \App\Models\Permission $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Activity $model): QueryBuilder
+    public function query(Permission $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -98,8 +98,7 @@ class PermissionsDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id'),
-            Column::make('activity_name'),
-            Column::make('duration'),
+            Column::make('name'),
             Column::make('amount'),
             Column::make('created_at'),
             Column::make('updated_at'),
@@ -122,15 +121,15 @@ class PermissionsDataTable extends DataTable
      * @param $resource
      * @return string
      */
-    protected function buildActions($activity)
+    protected function buildActions($Permission)
     {
         /*if ($this->user == null) {
             return '';
         }*/
 
         $routes = [
-            'view' => route('activities.show', $activity->id),
-            'edit' => route('activities.edit', $activity->id),
+            'view' => route('activities.show', $Permission->id),
+            'edit' => route('activities.edit', $Permission->id),
             // 'destroy' => route('projects.projects.destroy',$project->id),
         ];
 
@@ -164,8 +163,8 @@ class PermissionsDataTable extends DataTable
 
         // if ($this->user->can('delete activities')) {
         //     $actions .= '
-        //      <a class="dropdown-item d-flex" href="#" data-id="'.$booking->id.'"
-        //          data-title="'.$booking->title.'" data-route="'.$routes['destroy'].'"
+        //      <a class="dropdown-item d-flex" href="#" data-id="'.$permission->id.'"
+        //          data-title="'.$permission->title.'" data-route="'.$routes['destroy'].'"
         //          data-toggle="modal" data-target="#destroy-entity-modal">
         //          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
         //              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
