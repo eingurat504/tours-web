@@ -29,8 +29,8 @@ class UsersDataTable extends DataTable
         ->editColumn('updated_at', function ($request) {
             return $request->updated_at->format('Y-m-d H:i:s'); // human readable format
         })
-        ->addColumn('actions', function ($booking) {
-            $actions = $this->buildActions($booking);
+        ->addColumn('actions', function ($user) {
+            $actions = $this->buildActions($user);
 
             return '
             <div class="dropdown show">
@@ -68,7 +68,7 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('activities-table')
+                    ->setTableId('users-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -92,17 +92,16 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('actions')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('activity_name'),
-            Column::make('duration'),
-            Column::make('amount'),
+            Column::make('name'),
+            Column::make('email'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('actions')
+            ->exportable(false)
+            ->printable(false)
+            ->width(60)
+            ->addClass('text-center'),
         ];
     }
 
@@ -113,7 +112,7 @@ class UsersDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Activities_' . date('YmdHis');
+        return 'users_' . date('YmdHis');
     }
 
             /**
@@ -122,21 +121,21 @@ class UsersDataTable extends DataTable
      * @param $resource
      * @return string
      */
-    protected function buildActions($activity)
+    protected function buildActions($user)
     {
         /*if ($this->user == null) {
             return '';
         }*/
 
         $routes = [
-            'view' => route('activities.show', $activity->id),
-            'edit' => route('activities.edit', $activity->id),
+            'view' => route('users.show', $user->id),
+            'edit' => route('users.edit', $user->id),
             // 'destroy' => route('projects.projects.destroy',$project->id),
         ];
 
         $actions = '';
 
-        // if ($this->user->can('view activities')) {
+        // if ($this->user->can('view users')) {
             $actions .= '
             <a class="dropdown-item d-flex" href="' . $routes['view'] . '">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -149,7 +148,7 @@ class UsersDataTable extends DataTable
             </a>';
         // }
 
-        // if ($this->user->can('update activities')) {
+        // if ($this->user->can('update users')) {
             $actions .= '
             <a class="dropdown-item d-flex" href="' . $routes['edit'] . '">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -162,10 +161,10 @@ class UsersDataTable extends DataTable
             </a>';
         // }
 
-        // if ($this->user->can('delete activities')) {
+        // if ($this->user->can('delete users')) {
         //     $actions .= '
-        //      <a class="dropdown-item d-flex" href="#" data-id="'.$booking->id.'"
-        //          data-title="'.$booking->title.'" data-route="'.$routes['destroy'].'"
+        //      <a class="dropdown-item d-flex" href="#" data-id="'.$user->id.'"
+        //          data-title="'.$user->title.'" data-route="'.$routes['destroy'].'"
         //          data-toggle="modal" data-target="#destroy-entity-modal">
         //          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
         //              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
