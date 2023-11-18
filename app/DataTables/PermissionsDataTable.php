@@ -68,7 +68,7 @@ class PermissionsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('activities-table')
+                    ->setTableId('permissions-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -112,7 +112,7 @@ class PermissionsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Activities_' . date('YmdHis');
+        return 'permissions_' . date('YmdHis');
     }
 
             /**
@@ -121,21 +121,21 @@ class PermissionsDataTable extends DataTable
      * @param $resource
      * @return string
      */
-    protected function buildActions($Permission)
+    protected function buildActions($permission)
     {
         /*if ($this->user == null) {
             return '';
         }*/
 
         $routes = [
-            'view' => route('activities.show', $Permission->id),
-            'edit' => route('activities.edit', $Permission->id),
+            'view' => route('permissions.show', $permission->id),
+            'edit' => route('permissions.edit', $permission->id),
             // 'destroy' => route('projects.projects.destroy',$project->id),
         ];
 
         $actions = '';
 
-        // if ($this->user->can('view activities')) {
+        // if ($this->user->can('view permissions')) {
             $actions .= '
             <a class="dropdown-item d-flex" href="' . $routes['view'] . '">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -148,7 +148,7 @@ class PermissionsDataTable extends DataTable
             </a>';
         // }
 
-        // if ($this->user->can('update activities')) {
+        // if ($this->user->can('update permissions')) {
             $actions .= '
             <a class="dropdown-item d-flex" href="' . $routes['edit'] . '">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -161,7 +161,7 @@ class PermissionsDataTable extends DataTable
             </a>';
         // }
 
-        // if ($this->user->can('delete activities')) {
+        // if ($this->user->can('delete permissions')) {
         //     $actions .= '
         //      <a class="dropdown-item d-flex" href="#" data-id="'.$permission->id.'"
         //          data-title="'.$permission->title.'" data-route="'.$routes['destroy'].'"
