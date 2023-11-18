@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Activity;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -52,10 +52,10 @@ class PaymentsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Activity $model
+     * @param \App\Models\Payment $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Activity $model): QueryBuilder
+    public function query(Payment $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -98,7 +98,7 @@ class PaymentsDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id'),
-            Column::make('activity_name'),
+            Column::make('Payment_name'),
             Column::make('duration'),
             Column::make('amount'),
             Column::make('created_at'),
@@ -122,15 +122,15 @@ class PaymentsDataTable extends DataTable
      * @param $resource
      * @return string
      */
-    protected function buildActions($activity)
+    protected function buildActions($Payment)
     {
         /*if ($this->user == null) {
             return '';
         }*/
 
         $routes = [
-            'view' => route('activities.show', $activity->id),
-            'edit' => route('activities.edit', $activity->id),
+            'view' => route('activities.show', $Payment->id),
+            'edit' => route('activities.edit', $Payment->id),
             // 'destroy' => route('projects.projects.destroy',$project->id),
         ];
 
