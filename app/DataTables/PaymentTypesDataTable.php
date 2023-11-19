@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Activity;
+use App\Models\PaymentType;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -55,7 +55,7 @@ class PaymentTypesDataTable extends DataTable
      * @param \App\Models\Activity $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Activity $model): QueryBuilder
+    public function query(PaymentType $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -68,7 +68,7 @@ class PaymentTypesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('activities-table')
+                    ->setTableId('payment-types-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -98,9 +98,7 @@ class PaymentTypesDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('id'),
-            Column::make('activity_name'),
-            Column::make('duration'),
-            Column::make('amount'),
+            Column::make('name'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

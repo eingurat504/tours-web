@@ -99,8 +99,7 @@ class PaymentsDataTable extends DataTable
                   ->addClass('text-center'),
             Column::make('id'),
             Column::make('Payment_name'),
-            Column::make('duration'),
-            Column::make('amount'),
+            Column::make('status'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

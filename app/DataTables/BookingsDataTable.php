@@ -55,7 +55,7 @@ class BookingsDataTable extends DataTable
      * @param \App\Models\Activity $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Activity $model): QueryBuilder
+    public function query(Booking $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -68,7 +68,7 @@ class BookingsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('activities-table')
+                    ->setTableId('bookings-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
