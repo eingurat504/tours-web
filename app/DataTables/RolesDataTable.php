@@ -68,7 +68,7 @@ class RolesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('activities-table')
+                    ->setTableId('roles-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -113,7 +113,7 @@ class RolesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Activities_' . date('YmdHis');
+        return 'roles_' . date('YmdHis');
     }
 
             /**
@@ -129,14 +129,14 @@ class RolesDataTable extends DataTable
         }*/
 
         $routes = [
-            'view' => route('activities.show', $activity->id),
-            'edit' => route('activities.edit', $activity->id),
+            'view' => route('roles.show', $activity->id),
+            'edit' => route('roles.edit', $activity->id),
             // 'destroy' => route('projects.projects.destroy',$project->id),
         ];
 
         $actions = '';
 
-        // if ($this->user->can('view activities')) {
+        // if ($this->user->can('view roles')) {
             $actions .= '
             <a class="dropdown-item d-flex" href="' . $routes['view'] . '">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -149,7 +149,7 @@ class RolesDataTable extends DataTable
             </a>';
         // }
 
-        // if ($this->user->can('update activities')) {
+        // if ($this->user->can('update roles')) {
             $actions .= '
             <a class="dropdown-item d-flex" href="' . $routes['edit'] . '">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -162,7 +162,7 @@ class RolesDataTable extends DataTable
             </a>';
         // }
 
-        // if ($this->user->can('delete activities')) {
+        // if ($this->user->can('delete roles')) {
         //     $actions .= '
         //      <a class="dropdown-item d-flex" href="#" data-id="'.$booking->id.'"
         //          data-title="'.$booking->title.'" data-route="'.$routes['destroy'].'"
