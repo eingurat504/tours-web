@@ -55,7 +55,7 @@ class UsersDataTable extends DataTable
      * @param \App\Models\Activity $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Role $model): QueryBuilder
+    public function query(User $model): QueryBuilder
     {
         return $model->newQuery();
     }
