@@ -18,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view-any permissions');
+        return $user->can('view-any users');
     }
 
     /**
@@ -35,11 +35,11 @@ class UserPolicy
             return true;
         }
 
-        return $user->can('view permissions');
+        return $user->can('view users');
     }
 
     /**
-     * Determine whether the user can create permissions.
+     * Determine whether the user can create users.
      *
      * @param \App\Models\User $user
      *
@@ -47,7 +47,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create permissions');
+        return $user->can('create users');
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
             return true;
         }
 
-        return $user->can('update permissions');
+        return $user->can('update users');
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function delete(User $user, int $permissionId)
     {
-        return $user->can('delete permissions');
+        return $user->can('delete users');
     }
 
 }
