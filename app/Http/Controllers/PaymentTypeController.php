@@ -124,5 +124,28 @@ class PaymentTypeController extends Controller
         return redirect()->route('payment_types.index');
 
     }
+
+               /**
+     * Remove the specified role from storage.
+     *
+     * @param int $roleId
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($paymentTypeId)
+    {
+        // $this->authorize('delete', [PaymentType::class]);
+
+        $payment_type = PaymentType::findOrFail($paymentTypeId);
+
+        $payment_type->delete();
+
+        flash('Payment Type has been deleted.')->error()->important();
+
+        return redirect()->route('payment_types.index');
+    }
     
 }

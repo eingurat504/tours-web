@@ -139,7 +139,7 @@ class PermissionController extends Controller
     }
 
 
-           /**
+    /**
      * Remove the specified role from storage.
      *
      * @param int $roleId
