@@ -76,14 +76,28 @@ class PaymentController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
+
+       /**
+     * Remove the specified role from storage.
      *
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
+     * @param int $roleId
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Booking $booking)
+    public function destroy($paymentId)
     {
-        //
+        // $this->authorize('delete', [Payment::class, $paymentId]);
+
+        $payment = Payment::findOrFail($paymentId);
+
+        $payment->delete();
+
+        flash('Payment has been deleted.')->error()->important();
+
+        return redirect()->route('payments.index');
     }
+
 }
