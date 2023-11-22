@@ -158,8 +158,16 @@ class UserController extends Controller
      * @param  \App\Models\PaymentLog  $paymentLog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaymentLog $paymentLog)
+    public function destroy($userId)
     {
-        //
+        // $this->authorize('force-delete', [User::class, $userId]);
+
+        $user = User::withTrashed()->findOrFail($userId);
+
+        $user->forceDelete();
+
+        Toastr::error($user->name, 'Deleted', ['closeButton' => true, 'timeOut' => 5000]);
+
+        return redirect()->route('users.index');
     }
 }

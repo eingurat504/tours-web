@@ -137,4 +137,28 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index');
 
     }
+
+
+    /**
+     * Remove the specified role from storage.
+     *
+     * @param int $roleId
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($permissionId)
+    {
+        // $this->authorize('delete', [Permission::class]);
+
+        $permission = Permission::findOrFail($permissionId);
+
+        $permission->delete();
+
+        flash('Permission has been deleted.')->error()->important();
+
+        return redirect()->route('permissions.index');
+    }
 }
