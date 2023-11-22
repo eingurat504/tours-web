@@ -81,16 +81,4 @@ class ActivityPolicy
         return $user->can('delete activities');
     }
 
-    /**
-     * Determine whether the user can sync role permissions.
-     *
-     * @param \App\Models\User $user
-     * @param int              $activityId
-     *
-     * @return bool
-     */
-    public function syncPermissions(User $user, int $activityId)
-    {
-        return $user->can('sync-permissions activities');
-    }
 }
