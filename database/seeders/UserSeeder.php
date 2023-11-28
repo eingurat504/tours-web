@@ -22,8 +22,8 @@ class UserSeeder extends Seeder
          * @return void
          */
         $user = new User();
-        $user->first_name = 'Super';
-        $user->last_name = 'Admin';
+        // $user->first_name = 'Super';
+        $user->name = ' Super Admin';
         $user->email = 'superadmin@admin.com';
         $user->email_verified_at = date('Y-m-d H:i:s');
         $user->password = Hash::make('12345678');
