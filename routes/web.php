@@ -50,4 +50,15 @@ Route::group(['prefix' => '/events', 'as' => 'events.'], function () {
     // Route::post('/', [App\Http\Controllers\ActivityController::class , 'store'])->name('store');
 });
 
+Route::pattern('permission', $int);
+
+Route::group(['prefix' => '/permission', 'as' => 'permissions.'], function () { 
+    Route::get('/', [App\Http\Controllers\PermissionController::class, 'index'])->name('index');
+    Route::get('/{permission}', [App\Http\Controllers\PermissionController::class, 'show'])->name('show');
+    Route::get('/create', [App\Http\Controllers\PermissionController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PermissionController::class , 'store'])->name('store');
+    Route::get('/{permission}/edit', [App\Http\Controllers\PermissionController::class, 'edit'])->name('edit');
+    Route::put('/{permission}/update', [App\Http\Controllers\PermissionController::class, 'update'])->name('update');
+});
+
 
