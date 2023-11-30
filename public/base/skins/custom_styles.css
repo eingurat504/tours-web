@@ -1,0 +1,52 @@
+
+.card.dash_widgets {
+  border: 1px solid #4CAF50;
+}
+
+.card.dash_widgets .card-watermark .icon,
+.card.dash_widgets .counter-inverse .counter-number-group,
+.card.dash_widgets .counter-inverse .counter-label {
+  color: #4CAF50;
+}
+
+.card.dash_widgets .card-watermark {
+  opacity: 0.8;
+}
+
+.dash_widgets .card-block h3,
+.dash_widgets .card-block p,
+.dash_widgets .card-block .weather_unitz .inline-block,
+.dash_widgets .card-block .week_forecast {
+  color: #4CAF50;
+}
+
+.panel-bordered.dash_widgets > .panel-heading > .panel-title {
+  color: #4CAF50;
+}
+
+.panel-bordered.dash_widgets > .panel-heading {
+    border-bottom: 1px solid #4CAF50;
+}
+
+.dash_widgets #organisation-widget-panel-body .table thead th,
+.dash_widgets #organisation-widget-panel-body .table tfoot th,
+.dash_widgets #supervisor-widget-panel-body .table thead th,
+.dash_widgets #supervisor-widget-panel-body .table tfoot th {
+    color: #4CAF50;
+}
+
+.panel-bordered.dash_widgets > .panel-heading > .panel-actions .panel-action {
+  color: #4CAF50;
+}
+
+.widget_edit_btn {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  font-size: 1rem;
+}
+
+.q_responses_widget {
+  background-color: #124975 !important;
+}
