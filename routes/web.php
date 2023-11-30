@@ -61,4 +61,27 @@ Route::group(['prefix' => '/permission', 'as' => 'permissions.'], function () {
     Route::put('/{permission}/update', [App\Http\Controllers\PermissionController::class, 'update'])->name('update');
 });
 
+Route::pattern('payment', $int);
+
+Route::group(['prefix' => '/payment', 'as' => 'payments.'], function () { 
+    Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('index');
+    Route::get('/{payment}', [App\Http\Controllers\PaymentController::class, 'show'])->name('show');
+    Route::get('/{payment}/approve', [App\Http\Controllers\PaymentController::class, 'showApprove'])->name('approve.show');
+    Route::put('/{payment}/approve', [App\Http\Controllers\PaymentController::class, 'approve'])->name('approve');
+    Route::get('/create', [App\Http\Controllers\PaymentController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PaymentController::class , 'store'])->name('store');
+});
+
+Route::pattern('payment_type', $int);
+
+Route::group(['prefix' => '/payment_type', 'as' => 'payment_types.'], function () { 
+    Route::get('/', [App\Http\Controllers\PaymentTypeController::class, 'index'])->name('index');
+    Route::get('/{payment_type}', [App\Http\Controllers\PaymentTypeController::class, 'show'])->name('show');
+    Route::get('/{payment_type}/edit', [App\Http\Controllers\PaymentTypeController::class, 'edit'])->name('edit');
+    Route::put('/{payment_type}/update', [App\Http\Controllers\PaymentTypeController::class, 'update'])->name('update');
+    Route::get('/create', [App\Http\Controllers\PaymentTypeController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PaymentTypeController::class , 'store'])->name('store');
+});
+
+
 
