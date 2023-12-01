@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Activity;
+use App\Models\Package;
+use App\DataTables\BookingsDataTable;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
