@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+$int = '^\d+$';
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
@@ -81,6 +83,23 @@ Route::group(['prefix' => '/payment_type', 'as' => 'payment_types.'], function (
     Route::put('/{payment_type}/update', [App\Http\Controllers\PaymentTypeController::class, 'update'])->name('update');
     Route::get('/create', [App\Http\Controllers\PaymentTypeController::class, 'create'])->name('create');
     Route::post('/', [App\Http\Controllers\PaymentTypeController::class , 'store'])->name('store');
+});
+
+Route::pattern('booking', $int);
+
+Route::group(['prefix' => '/booking', 'as' => 'bookings.'], function () { 
+    Route::get('/', [App\Http\Controllers\BookingController::class, 'index'])->name('index');
+    Route::get('/{booking}', [App\Http\Controllers\BookingController::class, 'show'])->name('show');
+    Route::get('/{booking}/edit', [App\Http\Controllers\BookingController::class, 'edit'])->name('edit');
+    Route::put('/{booking}/update', [App\Http\Controllers\BookingController::class, 'update'])->name('update');
+    Route::get('/create', [App\Http\Controllers\BookingController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\BookingController::class , 'store'])->name('store');
+    Route::get('/{booking}/approve', [App\Http\Controllers\BookingController::class, 'showApprove'])->name('approve.index');
+    Route::put('/{booking}/approve', [App\Http\Controllers\BookingController::class, 'approve'])->name('approve');
+    Route::get('/{booking}/reserve', [App\Http\Controllers\BookingController::class, 'showReserve'])->name('reserve.index');
+    Route::put('/{booking}/reserve', [App\Http\Controllers\BookingController::class, 'reserve'])->name('reserve');
+    Route::get('/{booking}/cancel', [App\Http\Controllers\BookingController::class, 'showCancel'])->name('cancel.index');
+    Route::put('/{booking}/cancel', [App\Http\Controllers\BookingController::class, 'cancel'])->name('cancel');
 });
 
 
