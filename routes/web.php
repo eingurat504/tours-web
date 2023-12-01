@@ -114,4 +114,15 @@ Route::group(['prefix' => '/activities', 'as' => 'activities.'], function () {
     Route::post('/', [App\Http\Controllers\ActivityController::class , 'store'])->name('store');
 });
 
+Route::pattern('user', $int);
+
+Route::group(['prefix' => '/user', 'as' => 'users.'], function () { 
+    Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
+    Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('show');
+    Route::get('/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
+    Route::put('/{user}/update', [App\Http\Controllers\UserController::class, 'update'])->name('update');
+    Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\UserController::class , 'store'])->name('store');
+});
+
 
