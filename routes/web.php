@@ -103,4 +103,15 @@ Route::group(['prefix' => '/booking', 'as' => 'bookings.'], function () {
 });
 
 
+Route::pattern('activity', $int);
+
+Route::group(['prefix' => '/activities', 'as' => 'activities.'], function () { 
+    Route::get('/', [App\Http\Controllers\ActivityController::class, 'index'])->name('index');
+    Route::get('/{activity}', [App\Http\Controllers\ActivityController::class, 'show'])->name('show');
+    Route::get('/{activity}/edit', [App\Http\Controllers\ActivityController::class, 'edit'])->name('edit');
+    Route::put('/{activity}/update', [App\Http\Controllers\ActivityController::class, 'update'])->name('update');
+    Route::get('/create', [App\Http\Controllers\ActivityController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\ActivityController::class , 'store'])->name('store');
+});
+
 
