@@ -13,7 +13,7 @@
 
 @section('content')
 
-<form method="POST" action="{{ route('payments.store') }}">
+<form method="POST" action="{{ route('payments.cancel', $payment->id) }}">
         @csrf
 
         <div class="row">
