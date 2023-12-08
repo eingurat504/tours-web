@@ -13,9 +13,9 @@
 
 @section('content')
 
-<form method="POST" action="{{ route('payments.store') }}">
+<form method="POST" action="{{ route('payments.approve', $payment->id) }}">
         @csrf
-
+        @method('PUT')
         <div class="row">
             <div class="col-lg-5 col-md-6 col-sm-12">
                 <!-- Panel -->
