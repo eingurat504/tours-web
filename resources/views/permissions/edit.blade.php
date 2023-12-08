@@ -13,8 +13,9 @@
 
 @section('content')
 
-<form method="POST" action="{{ route('payment_types.store') }}">
+<form method="POST" action="{{ route('permissions.update', $permission->id) }}">
         @csrf
+        @method('PUT')
         <div class="row">
 
             <div class="col-lg-5 col-md-6 col-sm-12">
