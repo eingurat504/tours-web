@@ -1,12 +1,12 @@
 @extends('layouts.core.base')
 
-@section('title', 'Payment Types')
+@section('title', 'Permissions')
 
 @section('breadcrumb')
-    <h1 class="page-title">Payment Types</h1>
+    <h1 class="page-title">Permissions</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('payment_types.index') }}">Payment Types</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('permissions.index') }}">Permissions</a></li>
         <li class="breadcrumb-item active">Create</li>
     </ol>
 @endsection
@@ -25,7 +25,7 @@
                             <label for="name">Name:</label>
                             <input type="text" name="name" id="name" required
                                 class="form-control form-control-lg @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}"/>
+                                value="{{ old('name', $permission->nake) }}"/>
                             @error('name')
                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                             @enderror
@@ -36,7 +36,7 @@
                                     class="form-control form-control-lg @error('description') is-invalid @enderror"
                                     rows="8"
                                     name="description"
-                                    data-error-container="#editor1_error">{{ old('description' ) }}</textarea>
+                                    data-error-container="#editor1_error">{{ old('description, $permission->description' ) }}</textarea>
                             @error('description')
                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                             @enderror
@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="{{ route('payment_types.index') }}"
+                                    <a href="{{ route('permissions.index') }}"
                                     class="btn btn-block btn-light btn-lg font-weight-medium auth-form-btn">
                                         {{ __('CANCEL') }}
                                     </a>
@@ -104,14 +104,14 @@
     <h1 class="page-title">Payment Types</h1>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('payment_types.index') }}">Payment Types</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('permissions.index') }}">Payment Types</a></li>
         <li class="breadcrumb-item active">Create</li>
     </ol>
 @endsection
 
 @section('content')
 
-<form method="POST" action="{{ route('payment_types.store') }}">
+<form method="POST" action="{{ route('permissions.store') }}">
         @csrf
         <div class="row">
 
@@ -141,7 +141,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="{{ route('payment_types.index') }}"
+                                    <a href="{{ route('permissions.index') }}"
                                     class="btn btn-block btn-light btn-lg font-weight-medium auth-form-btn">
                                         {{ __('CANCEL') }}
                                     </a>

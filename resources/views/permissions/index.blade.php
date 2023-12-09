@@ -60,17 +60,5 @@
             });
         });
 
-        $("#dataTablesCheckbox").change(function(){
-            alert('hi');
-            if($(this).prop("checked") == true){
-                $("input:checkbox").prop("checked", this.checked);
-
-            }
-            if($(this).prop("checked") == false)
-            {
-                $("input:checkbox").prop("checked", false);
-            }
-        });
-
     </script>
 @endpush
