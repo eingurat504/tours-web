@@ -25,7 +25,7 @@
                             <label for="name">Name:</label>
                             <input type="text" name="name" id="name" required
                                 class="form-control form-control-lg @error('name') is-invalid @enderror"
-                                value="{{ old('name', $permission->nake) }}"/>
+                                value="{{ old('name', $permission->name) }}"/>
                             @error('name')
                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                             @enderror
@@ -36,7 +36,7 @@
                                     class="form-control form-control-lg @error('description') is-invalid @enderror"
                                     rows="8"
                                     name="description"
-                                    data-error-container="#editor1_error">{{ old('description, $permission->description' ) }}</textarea>
+                                    data-error-container="#editor1_error">{{ old('description', $permission->description) }}</textarea>
                             @error('description')
                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                             @enderror
