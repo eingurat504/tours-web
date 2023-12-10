@@ -98,27 +98,3 @@
         </div>
     </form>
 @endsection
-
-@push('extra-js')
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-<script type="text/javascript">
-
-    var start_date = $('form#project_form').find('input[name=start_date]').data('value');
-    if (start_date) {
-        $("input[name='start_date']").val(start_date);
-    } else {
-        $("input[name='start_date']").val(moment().subtract(1, 'month').format('YYYY-MM-DD'));
-    }
-
-    var end_date = $('form#training_report').find('input[name=end_date]').data('value');
-    if (end_date) {
-        $("input[name='end_date']").val(end_date);
-    } else {
-        $("input[name='end_date']").val(moment().format('YYYY-MM-DD'));
-    }
-
-</script>
-
-@endpush
