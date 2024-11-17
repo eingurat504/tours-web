@@ -131,7 +131,6 @@ class ActivitiesDataTable extends DataTable
     public function getColumns(): array
     {
         return [    
-            Column::make('id'),
             Column::make('activity_name'),
             Column::make('duration'),
             Column::make('amount'),

@@ -51,8 +51,8 @@ class PaymentsDataTable extends DataTable
     {
         return datatables()
                 ->eloquent($query)
-                ->addColumn('category_id', function ($payment) {
-                    return $payment->category->name ?? '';
+                ->addColumn('booking_id', function ($payment) {
+                    return $payment->booking->booking_no ?? '';
                 })
                 ->addColumn('status', function ($delivery) {
                     if ($delivery->status == 1) {
@@ -142,7 +142,7 @@ class PaymentsDataTable extends DataTable
         return [    
             Column::make('payment_reference_no'),
             Column::make('mode_of_payment'),
-            Column::make('booking_id'),
+            Column::make('booking_id')->title('Booking No'),
             Column::make('status'),
             Column::make('amount'),
             Column::make('created_at'),
