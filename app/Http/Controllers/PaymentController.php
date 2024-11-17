@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use App\Models\Payment;
+use App\Models\PaymentType;
 use Illuminate\Http\Request;
+use App\DataTables\PaymentsDataTable;
 
 class PaymentController extends Controller
 {

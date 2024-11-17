@@ -19,10 +19,6 @@
         </div>
         <i class="fas fa-chevron-down"></i>
       </a>
-      <a href="#" class="flex items-center space-x-3 py-2 px-4 rounded hover:bg-gray-700">
-        <i class="fas fa-calendar"></i>
-        <span>Categories</span>
-      </a>
       <a href="{{ route('activities.index') }}" class="flex items-center space-x-3 py-2 px-4 rounded hover:bg-gray-700">
         <i class="fas fa-user"></i>
         <span>Activities</span>
@@ -33,6 +29,10 @@
           <span>Bookings</span>
         </div>
       </a>
+      <a href="{{ route('payments.index') }}" class="flex items-center space-x-3 py-2 px-4 rounded hover:bg-gray-700">
+        <i class="fas fa-calendar"></i>
+        <span>Payments</span>
+      </a>
     </div>
 
     <div>
@@ -40,13 +40,13 @@
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-envelope"></i>
-          <span>Sales Report</span>
+          <span>Booking Report</span>
         </div>
       </a>
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-inbox"></i>
-          <span>Product Report</span>
+          <span>Payments Report</span>
         </div>
       </a>
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
@@ -86,7 +86,8 @@
       <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
       <div>
         <p class="font-medium">{{ Auth::user()->first_name }}</p>
-        <a href="{{ route('logout') }}" class="text-sm text-gray-400 hover:text-gray-200">Logout</a>
+        <a href="{{ route('logout') }}" class="text-sm text-gray-400 hover:text-gray-200" 
+        onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST">
             @csrf
         </form>

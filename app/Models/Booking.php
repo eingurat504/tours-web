@@ -12,4 +12,9 @@ class Booking extends Model
     protected $casts = [
         'activity_ids' => 'array'
     ];
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

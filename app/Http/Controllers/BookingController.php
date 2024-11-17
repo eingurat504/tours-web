@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\Activity;
 use App\Models\Package;
 use App\DataTables\BookingsDataTable;
@@ -151,13 +152,14 @@ class BookingController extends Controller
         ]);
     }
 
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function showApprove(Request $request, $booking)
+    public function showConfirm(Request $request, $booking)
     {
 
         $booking = Booking::find($booking);
@@ -176,7 +178,7 @@ class BookingController extends Controller
 
         $booking['booked_activities'] = rtrim($booked, ', ');
 
-        return view('bookings.approve', [
+        return view('bookings.confirm', [
             'booking' => $booking,
             'activities'  => $booking_activities
         ]);
@@ -302,38 +304,7 @@ class BookingController extends Controller
         
     }
 
-        /**
-     * Approve Booking .
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function approve(Request $request, $bookingId)
-    {
-
-          // $this->authorize('create bookings');
-        
-        $booking = Booking::findorfail($bookingId);
-        
-        Booking::where('id', $bookingId)
-                  ->update([
-                      'status' => 'approved'
-                  ]);
-
-        $payment = new Payment();
-        $payment->payment_reference_no = 'PRN-'.$this->gen_paymentNumber().'-'.$this->generate_initials($name);
-        $payment->booking_id = $booking->id;
-        $payment->status = 1; //fully paid
-        $payment->save();
-
-        // flash("{$booking->booking_no} accessed.")->success();
-
-          return redirect()->route('bookings.index');
-        
-    }
-
-          /**
+    /**
      * Reserve booking .
      *
      * @param  \Illuminate\Http\Request  $request
@@ -352,11 +323,36 @@ class BookingController extends Controller
                       'status' => 'reserved'
                   ]);
 
+            // flash("{$booking->traveller_name} created.")->success();
+
+          return redirect()->route('bookings.index');
+        
+    }
+
+              /**
+     * Reserve booking .
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm(Request $request, $bookingId)
+    {
+
+          // $this->authorize('create bookings');
+        
+          $booking = Booking::findorfail($bookingId);
+
+          Booking::where('id', $bookingId)
+                  ->update([
+                      'status' => 'confirmed'
+                  ]);
+
             $payment = new Payment();
-            $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$book->booking_no;
+            $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$booking->booking_no;
             $payment->booking_id = $booking->id;
             $payment->amount = $request->amount;
-            $payment->status = 0; // partial
+            $payment->status = 0; 
             $payment->remarks = $request->remarks;
             $payment->save();
   

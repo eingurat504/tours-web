@@ -42,7 +42,7 @@
                 </div>
 
                 <div>
-                    <label for="amount" class="block text-sm font-medium text-gray-700">Activity Name:</label>
+                    <label for="amount" class="block text-sm font-medium text-gray-700">Amount:</label>
                     <input type="integer" id="amount" name="amount" value="{{ old('amount') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('amount') is-invalid @enderror">
                     @error('amount')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
