@@ -57,10 +57,10 @@ class BookingsDataTable extends DataTable
                 ->addColumn('status', function ($booking) {
                     if ($booking->status == 'pending') {
                         return '<span class="inline-block bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">pending</span>';
-                    } elseif ($booking->status == 'approve') {
-                        return '<span class="inline-block bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">Approved</span>';
+                    } elseif ($booking->status == 'reserved') {
+                        return '<span class="inline-block bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded">Reserved</span>';
                     }  else {
-                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Reserved</span>';
+                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Confirmed</span>';
                     }
                 })
                 ->editColumn('created_at', function ($request) {
@@ -180,21 +180,21 @@ class BookingsDataTable extends DataTable
 
         $routes = [
             'confirm' => route('bookings.confirm',$booking->id),
-            'reserve' => route('bookings.reserve',$booking->id)
+            // 'reserve' => route('bookings.reserve',$booking->id)
         ];
 
         $actions = ' ';
 
         // if ($this->user->can('view bookings')) {
-            $actions .= '
-            <li>
-                <a href="' . $routes['reserve'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
-                </a>
-            </li>';
+            // $actions .= '
+            // <li>
+            //     <a href="' . $routes['reserve'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+            //         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            //             <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
+            //             <circle cx="12" cy="12" r="3" />
+            //         </svg>
+            //     </a>
+            // </li>';
         // }
 
                         

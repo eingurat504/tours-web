@@ -90,10 +90,8 @@ Route::group(['prefix' => '/booking', 'as' => 'bookings.'], function () {
     Route::put('/{booking}/update', [App\Http\Controllers\BookingController::class, 'update'])->name('update');
     Route::get('/create', [App\Http\Controllers\BookingController::class, 'create'])->name('create');
     Route::post('/', [App\Http\Controllers\BookingController::class , 'store'])->name('store');
-    Route::get('/{booking}/approve', [App\Http\Controllers\BookingController::class, 'showApprove'])->name('approve.index');
-    Route::put('/{booking}/approve', [App\Http\Controllers\BookingController::class, 'approve'])->name('approve');
-    Route::get('/{booking}/reserve', [App\Http\Controllers\BookingController::class, 'showReserve'])->name('reserve.index');
-    Route::put('/{booking}/reserve', [App\Http\Controllers\BookingController::class, 'reserve'])->name('reserve');
+    Route::get('/{booking}/confirm', [App\Http\Controllers\BookingController::class, 'showConfirm'])->name('confirm.index');
+    Route::put('/{booking}/confirm', [App\Http\Controllers\BookingController::class, 'confirm'])->name('confirm');
     Route::get('/{booking}/cancel', [App\Http\Controllers\BookingController::class, 'showCancel'])->name('cancel.index');
     Route::put('/{booking}/cancel', [App\Http\Controllers\BookingController::class, 'cancel'])->name('cancel');
 });

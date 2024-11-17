@@ -73,7 +73,7 @@ class BookingController extends Controller
         $booking->traveller_phone_no = $request->traveller_phone_no;
         $booking->traveller_flight_no = $request->traveller_flight_no;
         $booking->package_id = $request->package;
-        $booking->status = 'pending';
+        $booking->status = 'reserve';
         $booking->no_of_adults = $request->no_of_adults;
         $booking->total_amount = $total_amount;
         $booking->no_of_children = $request->no_of_children;
@@ -184,37 +184,6 @@ class BookingController extends Controller
         ]);
     }
 
-        /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function showReserve(Request $request, $booking)
-    {
-
-        $booking = Booking::find($booking);
-        $activities = Activity::get();
-        $booking_activities = Activity::whereIn('id', $booking->activity_ids);
-        $booked = '';
-
-        foreach ($booking->activity_ids as $activity) {
-            foreach ($activities as $booked_activity) {
-                if ($booked_activity['id'] == $activity) {
-                    $booked .= $booked_activity->activity_name . ', ';
-                    break;
-                }
-            }
-        }
-
-        $booking['booked_activities'] = rtrim($booked, ', ');
-
-        return view('bookings.reserve', [
-            'booking' => $booking,
-            'activities'  => $booking_activities
-        ]);
-    }
-
     /**
      * Show edit page
      *
@@ -311,39 +280,21 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function reserve(Request $request, $bookingId)
-    {
-
-          // $this->authorize('create bookings');
-        
-          $booking = Booking::findorfail($bookingId);
-
-          Booking::where('id', $bookingId)
-                  ->update([
-                      'status' => 'reserved'
-                  ]);
-
-            // flash("{$booking->traveller_name} created.")->success();
-
-          return redirect()->route('bookings.index');
-        
-    }
-
-              /**
-     * Reserve booking .
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
     public function confirm(Request $request, $bookingId)
     {
 
           // $this->authorize('create bookings');
+
+          $this->validate($request, [
+            'amount' => 'required',
+            'mode_of_payment' => 'required',
+            'remarks' => 'required',
+        ]);
         
           $booking = Booking::findorfail($bookingId);
 
           Booking::where('id', $bookingId)
+                  ->where('status', 'reserved')
                   ->update([
                       'status' => 'confirmed'
                   ]);
@@ -352,6 +303,7 @@ class BookingController extends Controller
             $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$booking->booking_no;
             $payment->booking_id = $booking->id;
             $payment->amount = $request->amount;
+            $payment->mode_of_payment = $request->mode_of_payment;
             $payment->status = 0; 
             $payment->remarks = $request->remarks;
             $payment->save();

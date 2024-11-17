@@ -99,15 +99,15 @@
                 </div>
 
                 <div>
-                    <label for="vertices" class="block text-sm font-medium text-gray-700">Mode of Payment:</label>
-                    <select id="un_wrapped_uvs" class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700">
-                        <option value="">Choose Mode of Payment...</option>
-                        <option value="mobile_money">Mobile Money</option>
-                        <option value="visa_card">Visa Card</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="cash">Cash</option>
-                    </select>
-                  </div>
+                <label for="vertices" class="block text-sm font-medium text-gray-700">Mode of Payment:</label>
+                <select id="un_wrapped_uvs" class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700">
+                    <option value="">Choose Mode of Payment...</option>
+                    <option value="mobile_money">Mobile Money</option>
+                    <option value="visa_card">Visa Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cash">Cash</option>
+                </select>
+                </div>
 
                 <div>
                     <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>

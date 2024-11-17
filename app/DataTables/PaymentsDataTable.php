@@ -58,7 +58,7 @@ class PaymentsDataTable extends DataTable
                     if ($delivery->status == 1) {
                         return '<span class="inline-block bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">fully paid</span>';
                     } else {
-                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">partialy</span>';
+                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">paid</span>';
                     }
                 })
                 ->editColumn('created_at', function ($request) {
