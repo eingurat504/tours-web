@@ -39,7 +39,13 @@
                                  
                             <tr>
                                 <td class="text-gray">Status: </td>
-                                <td>{{ $booking->status }}</td>
+                                <td>
+                                @if ($booking->status == 'reserved')
+                                    <span class="inline-block bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">{{ $booking->status }}</span>
+                                @else
+                                    <span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">{{ $booking->status }}</span>
+                                @endif
+                                </td>
                             </tr>
                             
                             <tr>
@@ -94,8 +100,8 @@
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
                 <div>
-                    <label for="mode_of_payments" class="block text-sm font-medium text-gray-700">Mode of Payment:</label>
-                    <select id="mode_of_payments" class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700">
+                    <label for="mode_of_payment" class="block text-sm font-medium text-gray-700">Mode of Payment:</label>
+                    <select id="mode_of_payment" name="mode_of_payment" class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700">
                         <option value="">Choose Mode of Payment...</option>
                         <option value="mobile_money">Mobile Money</option>
                         <option value="visa_card">Visa Card</option>

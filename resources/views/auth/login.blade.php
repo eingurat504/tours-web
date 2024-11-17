@@ -29,9 +29,6 @@
             <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Login</button>
             </div>
         </form>
-        <p class="text-sm text-gray-600 text-center">
-            Don't have an account? <a href="/signup" class="text-blue-500 hover:underline">Sign up</a>
-        </p>
         </div>
     </div>
 </form>

@@ -51,15 +51,10 @@ class BookingsDataTable extends DataTable
     {
         return datatables()
                 ->eloquent($query)
-                ->addColumn('activities_id', function ($booking) {
-                    return $booking->category->name ?? '';
-                })
                 ->addColumn('status', function ($booking) {
-                    if ($booking->status == 'pending') {
-                        return '<span class="inline-block bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">pending</span>';
-                    } elseif ($booking->status == 'reserved') {
-                        return '<span class="inline-block bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded">Reserved</span>';
-                    }  else {
+                    if ($booking->status == 'reserved') {
+                        return '<span class="inline-block bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">reserved</span>';
+                    } else {
                         return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Confirmed</span>';
                     }
                 })
