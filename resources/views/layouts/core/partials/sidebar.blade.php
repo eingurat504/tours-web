@@ -40,13 +40,13 @@
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-envelope"></i>
-          <span>Sales Report</span>
+          <span>Booking Report</span>
         </div>
       </a>
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-inbox"></i>
-          <span>Product Report</span>
+          <span>Payments Report</span>
         </div>
       </a>
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
