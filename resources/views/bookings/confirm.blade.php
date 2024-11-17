@@ -39,7 +39,13 @@
                                  
                             <tr>
                                 <td class="text-gray">Status: </td>
-                                <td>{{ $booking->status }}</td>
+                                <td>
+                                @if ($booking->status == 'reserved')
+                                    <span class="inline-block bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">{{ $booking->status }}</span>
+                                @else
+                                    <span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">{{ $booking->status }}</span>
+                                @endif
+                                </td>
                             </tr>
                             
                             <tr>
