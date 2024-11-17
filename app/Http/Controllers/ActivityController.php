@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use App\DataTables\ActivitiesDataTable;
 
-class BookingController extends Controller
+class ActivityController extends Controller
 {
 
     /**
