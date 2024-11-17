@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\DataTables\ActivitiesDataTable;
 
@@ -67,12 +67,12 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        
+    
         $this->validate($request, [
             'activity_name' => 'required',
-            'duration' => 'required',
+            'duration' => 'required|integer',
             'description' => 'required',
-            'amount' => 'required',
+            'amount' => 'required|integer',
         ]);
 
         $activity = new Activity();
@@ -82,7 +82,7 @@ class ActivityController extends Controller
         $activity->amount = $request->amount;
         $activity->save();
 
-        // flash("{$booking->traveller_name} created.")->success();
+        // flash("{$activity->activity_name} created.")->success();
 
         return redirect()->route('activities.index');
     }

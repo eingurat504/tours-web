@@ -12,89 +12,51 @@
 @endsection
 
 @section('content')
-
+<h6 class="text-xl font-bold mb-4">CREATE</h6>
 <form method="POST" action="{{ route('activities.store') }}">
-        @csrf
+    @csrf
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="bg-white p-6 rounded-lg shadow">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <div>
+                    <label for="activity_name" class="block text-sm font-medium text-gray-700">Activity Name:</label>
+                    <input type="text" id="activity_name" name="activity_name" value="{{ old('activity_name') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('activity_name') is-invalid @enderror">
+                    @error('activity_name')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror  
+                </div>
+                <div>
+                    <label for="duration" class="block text-sm font-medium text-gray-700">Duration (In Hours):</label>
+                    <input type="text" id="duration" name="duration" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('duration') is-invalid @enderror">
+                    @error('duration')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror   
+                </div>
 
-        <div class="row">
-            <div class="col-lg-5 col-md-6 col-sm-12">
-                <!-- Panel -->
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Create Activity</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="activity_name">Name:</label>
-                            <input type="text" name="activity_name" id="activity_name" required
-                                   class="form-control form-control-lg @error('activity_name') is-invalid @enderror"
-                                   value="{{ old('activity_name') }}"/>
-                            @error('activity_name')
-                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                            @enderror
-                        </div>
+                <div>
+                    <label for="Description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="Description" name="description" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">{{ old('description') }}</textarea>
+                @error('description')
+                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                @enderror   
+                </div>
 
-                        <div class="form-group">
-                            <label for="duration">Duration (In Hours):</label>
-                            <input type="integer" name="duration" id="duration" required
-                                   class="form-control form-control-lg @error('duration') is-invalid @enderror"
-                                   value="{{ old('duration') }}"/>
-                            @error('duration')
-                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Brief description:</label>
-                            <textarea title="Description"
-                                      class="form-control form-control-lg @error('description') is-invalid @enderror"
-                                      rows="6"
-                                      name="description"
-                                      data-error-container="#editor1_error">{{ old('description' ) }}</textarea>
-                            @error('description')
-                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="amount">Amount:</label>
-                            <input type="integer" name="amount" id="amount" required
-                                   class="form-control form-control-lg @error('amount') is-invalid @enderror"
-                                   value="{{ old('amount') }}" />
-                            @error('amount')
-                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a href="{{ route('activities.index') }}"
-                                       class="btn btn-lg btn-block btn-default">
-                                        {{ __('CANCEL') }}
-                                    </a>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-lg btn-block btn-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="feather feather-save">
-                                            <path
-                                                d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                            <polyline points="7 3 7 8 15 8"></polyline>
-                                        </svg>
-                                        Store
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    <label for="amount" class="block text-sm font-medium text-gray-700">Activity Name:</label>
+                    <input type="integer" id="amount" name="amount" value="{{ old('amount') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('amount') is-invalid @enderror">
+                    @error('amount')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror  
                 </div>
             </div>
+            <hr/>
+            <div class="mt-4">
+                <a href="{{ route('activities.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"> <i class="fas fa-plus"></i>Cancel</a>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas fa-plus"></i>Create</button>
+            </div>
         </div>
-    </form>
+    </div>
+</form>
+
 @endsection
 

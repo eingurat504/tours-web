@@ -3,7 +3,7 @@
 namespace App\DataTables;
 
 
-use App\Models\Booking;
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -52,24 +52,14 @@ class ActivitiesDataTable extends DataTable
     {
         return datatables()
                 ->eloquent($query)
-                ->addColumn('category_id', function ($booking) {
-                    return $booking->category->name ?? '';
-                })
-                ->addColumn('status', function ($delivery) {
-                    if ($delivery->status == 1) {
-                        return '<span class="inline-block bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">UnPublished</span>';
-                    } else {
-                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Published</span>';
-                    }
-                })
                 ->editColumn('created_at', function ($request) {
                     return $request->created_at->format('Y-m-d H:i:s'); // human readable format
                 })
                 ->editColumn('updated_at', function ($request) {
                     return $request->updated_at->format('Y-m-d H:i:s'); // human readable format
                 })
-                ->addColumn('actions', function ($booking) {
-                    $actions = $this->buildActions($booking);
+                ->addColumn('actions', function ($activity) {
+                    $actions = $this->buildActions($activity);
 
                     return '
                         <ul class="flex gap-2 list-none mb-0">
@@ -85,9 +75,9 @@ class ActivitiesDataTable extends DataTable
      * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Booking $booking)
+    public function query(Activity $activity)
     {
-        $query = $booking->newQuery();
+        $query = $activity->newQuery();
 
         return $query;
     }
@@ -101,18 +91,18 @@ class ActivitiesDataTable extends DataTable
     {
 
         return $this->builder()
-                    ->setTableId('bookings-table')
+                    ->setTableId('activities-table')
                     ->columns($this->getColumns())
                     ->language([
-                        'emptyTable' => "No bookings available",
-                        'info' => "Showing _START_ to _END_ of _TOTAL_ bookings",
-                        'infoEmpty' => "Showing 0 to 0 of 0 bookings",
-                        'infoFiltered' => "(filtered from _MAX_ total bookings)",
+                        'emptyTable' => "No Activities available",
+                        'info' => "Showing _START_ to _END_ of _TOTAL_ Activities",
+                        'infoEmpty' => "Showing 0 to 0 of 0 Activities",
+                        'infoFiltered' => "(filtered from _MAX_ total Activities)",
                         'infoPostFix' => "",
                         'thousands' => ",",
-                        'lengthMenu' => "Show _MENU_ bookings",
-                        'search' => 'Search bookings:',
-                        'zeroRecords' => 'No bookings match search criteria'
+                        'lengthMenu' => "Show _MENU_ Activities",
+                        'search' => 'Search Activities:',
+                        'zeroRecords' => 'No Activities match search criteria'
                     ])
                     ->minifiedAjax()
                     // ->addCheckbox()
@@ -162,7 +152,7 @@ class ActivitiesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'bookings_' . date('YmdHis');
+        return 'Activities_' . date('YmdHis');
     }
 
         /**
@@ -171,36 +161,37 @@ class ActivitiesDataTable extends DataTable
      * @param $resource
      * @return string
      */
-    protected function buildActions($booking)
+    protected function buildActions($Activity)
     {
         /*if ($this->user == null) {
             return '';
         }*/
 
         $routes = [
-            'view' => route('bookings.show', $booking->id),
-            'uploads' => route('bookings.uploads',$booking->id)
+            'view' => route('activities.show', $Activity->id),
+            'edit' => route('activities.edit',$Activity->id)
         ];
 
         $actions = ' ';
 
-        // if ($this->user->can('view bookings')) {
+        // if ($this->user->can('view Activities')) {
             $actions .= '
             <li>
                 <a href="' . $routes['view'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
+                        <circle cx="12" cy="12" r="3" />
                     </svg>
                 </a>
             </li>';
         // }
 
-            // if ($this->user->can('view bookings')) {
+            // if ($this->user->can('view Activities')) {
             $actions .= '
             <li>
-                <a href="' . $routes['uploads'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                <a href="' . $routes['edit'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 15l3.536 3.536 7.071-7.071-3.536-3.536L9 15zM4 20l4-1-3-3-1 4z" />
                     </svg>
                 </a>
             </li>';      

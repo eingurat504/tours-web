@@ -51,7 +51,7 @@ class BookingsDataTable extends DataTable
     {
         return datatables()
                 ->eloquent($query)
-                ->addColumn('category_id', function ($booking) {
+                ->addColumn('activities_id', function ($booking) {
                     return $booking->category->name ?? '';
                 })
                 ->addColumn('status', function ($delivery) {
@@ -75,7 +75,7 @@ class BookingsDataTable extends DataTable
                            '.$actions.'
                         </ul>';
                 })
-                ->rawColumns(['actions','status','category_id']);
+                ->rawColumns(['actions','status','activities_id']);
     }
 
     /**
@@ -178,7 +178,7 @@ class BookingsDataTable extends DataTable
 
         $routes = [
             'view' => route('bookings.show', $booking->id),
-            'uploads' => route('bookings.uploads',$booking->id)
+            'edit' => route('bookings.edit',$booking->id)
         ];
 
         $actions = ' ';
@@ -188,7 +188,8 @@ class BookingsDataTable extends DataTable
             <li>
                 <a href="' . $routes['view'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
+                        <circle cx="12" cy="12" r="3" />
                     </svg>
                 </a>
             </li>';
@@ -197,9 +198,9 @@ class BookingsDataTable extends DataTable
             // if ($this->user->can('view bookings')) {
             $actions .= '
             <li>
-                <a href="' . $routes['uploads'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                <a href="' . $routes['edit'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 15l3.536 3.536 7.071-7.071-3.536-3.536L9 15zM4 20l4-1-3-3-1 4z" />
                     </svg>
                 </a>
             </li>';      
