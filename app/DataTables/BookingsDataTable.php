@@ -54,11 +54,13 @@ class BookingsDataTable extends DataTable
                 ->addColumn('activities_id', function ($booking) {
                     return $booking->category->name ?? '';
                 })
-                ->addColumn('status', function ($delivery) {
-                    if ($delivery->status == 1) {
-                        return '<span class="inline-block bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">UnPublished</span>';
-                    } else {
-                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Published</span>';
+                ->addColumn('status', function ($booking) {
+                    if ($booking->status == 'pending') {
+                        return '<span class="inline-block bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded">pending</span>';
+                    } elseif ($booking->status == 'approve') {
+                        return '<span class="inline-block bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">Approved</span>';
+                    }  else {
+                        return '<span class="inline-block bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded">Reserved</span>';
                     }
                 })
                 ->editColumn('created_at', function ($request) {
@@ -114,7 +116,6 @@ class BookingsDataTable extends DataTable
                         'zeroRecords' => 'No bookings match search criteria'
                     ])
                     ->minifiedAjax()
-                    // ->addCheckbox()
                     ->orderBy(4, 'desc')
                     // ->pageLength(10)
                     ->responsive()
@@ -143,6 +144,7 @@ class BookingsDataTable extends DataTable
             Column::make('booking_no'),
             Column::make('traveller_name'),
             Column::make('traveller_flight_no'),
+            Column::make('status'),
             Column::make('total_amount'),
             Column::make('created_at'),
             Column::make('updated_at'),

@@ -9,7 +9,7 @@
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold">Bookings</h2>
       <a href="{{ route('bookings.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-        <i class="fas fa-plus"></i> Add Booking
+        <i class="fas fa-plus"></i>Book Activity
         </a>
     </div>
 

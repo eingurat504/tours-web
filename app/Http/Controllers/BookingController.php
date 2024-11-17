@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\Activity;
 use App\Models\Package;
 use App\DataTables\BookingsDataTable;
@@ -353,10 +354,10 @@ class BookingController extends Controller
                   ]);
 
             $payment = new Payment();
-            $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$book->booking_no;
+            $payment->payment_reference_no = 'PRN-'.$booking->traveller_name.'-'.$booking->booking_no;
             $payment->booking_id = $booking->id;
             $payment->amount = $request->amount;
-            $payment->status = 0; // partial
+            $payment->status = 0; 
             $payment->remarks = $request->remarks;
             $payment->save();
   

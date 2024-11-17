@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Booking;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -51,8 +51,8 @@ class PaymentsDataTable extends DataTable
     {
         return datatables()
                 ->eloquent($query)
-                ->addColumn('category_id', function ($booking) {
-                    return $booking->category->name ?? '';
+                ->addColumn('category_id', function ($payment) {
+                    return $payment->category->name ?? '';
                 })
                 ->addColumn('status', function ($delivery) {
                     if ($delivery->status == 1) {
@@ -67,8 +67,8 @@ class PaymentsDataTable extends DataTable
                 ->editColumn('updated_at', function ($request) {
                     return $request->updated_at->format('Y-m-d H:i:s'); // human readable format
                 })
-                ->addColumn('actions', function ($booking) {
-                    $actions = $this->buildActions($booking);
+                ->addColumn('actions', function ($payment) {
+                    $actions = $this->buildActions($payment);
 
                     return '
                         <ul class="flex gap-2 list-none mb-0">
@@ -84,9 +84,9 @@ class PaymentsDataTable extends DataTable
      * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Booking $booking)
+    public function query(Payment $payment)
     {
-        $query = $booking->newQuery();
+        $query = $payment->newQuery();
 
         return $query;
     }
@@ -100,18 +100,18 @@ class PaymentsDataTable extends DataTable
     {
 
         return $this->builder()
-                    ->setTableId('bookings-table')
+                    ->setTableId('payments-table')
                     ->columns($this->getColumns())
                     ->language([
-                        'emptyTable' => "No bookings available",
-                        'info' => "Showing _START_ to _END_ of _TOTAL_ bookings",
-                        'infoEmpty' => "Showing 0 to 0 of 0 bookings",
-                        'infoFiltered' => "(filtered from _MAX_ total bookings)",
+                        'emptyTable' => "No Payments available",
+                        'info' => "Showing _START_ to _END_ of _TOTAL_ Payments",
+                        'infoEmpty' => "Showing 0 to 0 of 0 Payments",
+                        'infoFiltered' => "(filtered from _MAX_ total Payments)",
                         'infoPostFix' => "",
                         'thousands' => ",",
-                        'lengthMenu' => "Show _MENU_ bookings",
-                        'search' => 'Search bookings:',
-                        'zeroRecords' => 'No bookings match search criteria'
+                        'lengthMenu' => "Show _MENU_ Payments",
+                        'search' => 'Search Payments:',
+                        'zeroRecords' => 'No Payments match search criteria'
                     ])
                     ->minifiedAjax()
                     // ->addCheckbox()
@@ -140,10 +140,11 @@ class PaymentsDataTable extends DataTable
     public function getColumns(): array
     {
         return [    
-            Column::make('booking_no'),
-            Column::make('traveller_name'),
-            Column::make('traveller_flight_no'),
-            Column::make('total_amount'),
+            Column::make('payment_reference_no'),
+            Column::make('mode_of_payment'),
+            Column::make('booking_id'),
+            Column::make('status'),
+            Column::make('amount'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('actions')
@@ -161,7 +162,7 @@ class PaymentsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'bookings_' . date('YmdHis');
+        return 'Payments_' . date('YmdHis');
     }
 
         /**
@@ -170,35 +171,35 @@ class PaymentsDataTable extends DataTable
      * @param $resource
      * @return string
      */
-    protected function buildActions($booking)
+    protected function buildActions($payment)
     {
         /*if ($this->user == null) {
             return '';
         }*/
 
         $routes = [
-            'view' => route('bookings.show', $booking->id),
-            'edit' => route('bookings.edit',$booking->id)
+            'approve' => route('payments.approve', $payment->id),
+            // 'destroy' => route('payments.destroy',$payment->id)
         ];
 
         $actions = ' ';
 
-        // if ($this->user->can('view bookings')) {
-            $actions .= '
-            <li>
-                <a href="' . $routes['view'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
-                </a>
-            </li>';
+        // if ($this->user->can('view Payments')) {
+            // $actions .= '
+            // <li>
+            //     <a href="' . $routes['approve'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+            //         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            //             <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
+            //             <circle cx="12" cy="12" r="3" />
+            //         </svg>
+            //     </a>
+            // </li>';
         // }
 
-            // if ($this->user->can('view bookings')) {
+            // if ($this->user->can('view Payments')) {
             $actions .= '
             <li>
-                <a href="' . $routes['edit'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                <a href="' . $routes['approve'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 15l3.536 3.536 7.071-7.071-3.536-3.536L9 15zM4 20l4-1-3-3-1 4z" />
                     </svg>

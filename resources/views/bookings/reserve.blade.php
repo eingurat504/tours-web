@@ -2,31 +2,16 @@
 
 @section('title', 'Bookings')
 
-@section('breadcrumb')
-    <h1 class="page-title">Bookings</h1>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('bookings.index') }}">Bookings</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('bookings.show' , $booking->id) }}">{{ $booking->booking_no }}</a></li>
-        <li class="breadcrumb-item active">Approve</li>
-    </ol>
-@endsection
-
 @section('content')
-
+<h6 class="text-xl font-bold mb-4">RESERVE</h6>
 <form method="POST" action="{{ route('bookings.reserve', $booking->id) }}">
         @csrf
         @method('PUT')
-    <div class="row">
-        <div class="col-lg-5 col-md-6 col-sm-12">
-            <!-- Panel -->
-            <div class="panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ $booking->booking_no }}</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table no-wrap">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="bg-white p-6 rounded-lg shadow">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <table class="table no-wrap">
                             <tbody>
 
                             <tr>
@@ -83,22 +68,6 @@
                                 </td>
                             </tr>
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-md-6 col-sm-12">
-            <!-- Panel -->
-            <div class="panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Details</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table no-wrap">
-                            <tbody>
                             <tr>
                                 <td class="text-gray">Start date</td>
                                 <td>{{ $booking->from_date }}</td>
@@ -115,40 +84,31 @@
                                 <td class="text-gray">Updated At</td>
                                 <td>{{ $booking->updated_at }}</td>
                             </tr>
+
                             </tbody>
                         </table>
-                    </div>
+            
+            </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
-                    <div class="form-group">
-                        <label for="description">Brief description:</label>
-                        <textarea title="Description"
-                                    class="form-control form-control-lg @error('description') is-invalid @enderror"
-                                    rows="6"
-                                    name="description"
-                                    data-error-container="#editor1_error">{{ old('description' ) }}</textarea>
-                        @error('description')
+                <div>
+                    <label for="Description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="Description" name="description" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">{{ old('description') }}</textarea>
+                    @error('description')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                            <a href="{{ route('bookings.index') }}"
-                               class="btn btn-block btn-light btn-lg font-weight-medium auth-form-btn">
-                                {{ __('CANCEL') }}
-                            </a>
-
-                        </div>
-                        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                            <button type="submit" class="btn btn-block btn-success btn-lg">
-                                <i class="icon md-minus-square" aria-hidden="true"></i>
-                                <span class="hidden-sm-down">Reserve</span>
-                            </button>
-                        </div>
-                    </div>
+                    @enderror   
                 </div>
+
+            </div>
+            <hr/>
+            <div class="mt-4">
+                <a href="{{ route('bookings.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"> <i class="fas fa-plus"></i>Cancel</a>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas fa-plus"></i>Create</button>
             </div>
         </div>
     </div>
+        
 </form>
 @endsection
