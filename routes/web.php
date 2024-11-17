@@ -23,10 +23,6 @@ $int = '^\d+$';
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::pattern('role', $int);
 
 Route::group(['prefix' => '/role', 'as' => 'roles.'], function () { 

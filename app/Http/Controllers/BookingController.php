@@ -54,6 +54,7 @@ class BookingController extends Controller
             'no_of_adults' => 'nullable',
             'no_of_children' => 'nullable',
             'no_of_people' => 'nullable',
+            'activities' => 'nullable',
             'package' => 'nullable|exists:packages,id',
             'activities_ids' => 'required|array',
             'activities_ids.*' => "required|exists:activities,id",
@@ -81,7 +82,7 @@ class BookingController extends Controller
         $booking->to_date = $request->to_date;
         $booking->save();
 
-        // flash("{$booking->traveller_name} created.")->success();
+        // flash("{$booking->booking_no} created.")->success();
         return redirect()->route('bookings.index');
 
     }

@@ -1,75 +1,34 @@
 @extends('layouts.core.base')
+@section('title')
+@lang('Products')
+@endsection
+@section('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+@endsection
+@section('content')
+  <h6 class="text-xl font-bold mb-4">LIST VIEW</h6>
 
-@section('title', 'Payments')
-
-@section('breadcrumb')
-    <h1 class="page-title">Payments</h1>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Payments</li>
-    </ol>
-    <div class="page-header-actions">
-        <a class="btn btn-sm btn-primary btn-round" href="{{route('payments.create')}}" >
-            <i class="icon md-plus-square" aria-hidden="true"></i>
-            <span class="hidden-sm-down">Add Payments</span>
+  <div class="mt-6 bg-white p-4 rounded shadow-md">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Users</h2>
+      <a href="{{ route('users.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        <i class="fas fa-plus"></i> Add User
         </a>
     </div>
+
+    {!! $dataTable->table(['class' => 'w-full text-sm text-left rtl:text-right bg-white rounded']) !!}
+    
+  </div>
 @endsection
+@section('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-@section('content')
-<!-- Panel -->
-<div class="panel">
-    <div class="panel-heading">
-        <h3 class="panel-title">Payments</h3>
-        <div class="panel-actions panel-actions-keep">
-            <div class="dropdown show">
-                <a class="panel-action" id="examplePanelDropdown" data-toggle="dropdown" href="#" aria-expanded="true" role="button"><i class="icon md-more-vert" aria-hidden="true"></i></a>
-                <div class="dropdown-menu dropdown-menu-bullet dropdown-menu-right" aria-labelledby="examplePanelDropdown" role="menu" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-153px, 38px, 0px);">
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-delete" aria-hidden="true"></i> Enable selected</a>
-                    <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-plus-square" aria-hidden="true"></i> Disable selected</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="table-responsive">
-                {{ $dataTable->table() }}
-        </div>
-    </div>
-</div>
-<!-- End Panel -->
+   <!--datatable js-->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+
+</script>
+{{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
 @endsection
-
-@push('extra-js')
-    {{ $dataTable->scripts() }}
-    <script>
-        $(document).ready(function () {
-            $('#destroy-entity-modal').on('show.bs.modal', function (event) {
-                var relatedTarget = $(event.relatedTarget);
-
-                var id = relatedTarget.data('id');
-                var title = relatedTarget.data('title');
-                var route = relatedTarget.data('route');
-
-                var form = $(this).find('form#destroy-entity');
-
-                form.attr('action', route);
-
-                form.find('span#title').text(title);
-            });
-        });
-
-        $("#dataTablesCheckbox").change(function(){
-            alert('hi');
-            if($(this).prop("checked") == true){
-                $("input:checkbox").prop("checked", this.checked);
-
-            }
-            if($(this).prop("checked") == false)
-            {
-                $("input:checkbox").prop("checked", false);
-            }
-        });
-
-    </script>
-@endpush
