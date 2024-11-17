@@ -25,6 +25,7 @@ class UsersSeeder extends Seeder
         // $user->first_name = 'Super';
         $user->name = ' Super Admin';
         $user->email = 'superadmin@admin.com';
+        $user->status = 'active';
         $user->email_verified_at = date('Y-m-d H:i:s');
         $user->password = Hash::make('12345678');
         $user->save();
