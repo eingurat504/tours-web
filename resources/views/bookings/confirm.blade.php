@@ -124,7 +124,9 @@
             <hr/>
             <div class="mt-4">
                 <a href="{{ route('bookings.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"> <i class="fas fa-plus"></i>Cancel</a>
+                @if ($booking->status == 'reserved') 
                 <button type="submit" class="bg-green-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas fa-plus"></i>Confirm</button>
+                @endif
             </div>
         </div>
     </div>

@@ -197,8 +197,7 @@ class BookingsDataTable extends DataTable
             // </li>';
         // }
 
-                        
-            // if ($this->user->can('view bookings')) {
+        if ($booking->status == 'reserved') {
                 $actions .= '
                 <li>
                     <a href="' . $routes['confirm'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
@@ -207,6 +206,8 @@ class BookingsDataTable extends DataTable
                         </svg>
                     </a>
                 </li>';  
+
+        }
 
         return $actions;
     }
