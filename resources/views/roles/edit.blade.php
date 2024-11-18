@@ -12,7 +12,7 @@
                     <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
                     <input type="text" id="name" name="name" value="{{ old('name', $role->name) }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('name') is-invalid @enderror">
                     @error('name')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror  
                 </div>
                 
