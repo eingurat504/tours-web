@@ -29,7 +29,8 @@ class BookingController extends Controller
     public function create()
     {
         //
-        // $this->authorize('create', [Booking::class]);
+        $this->authorize('create', [Booking::class]);
+
         $packages = Package::get();
         $activities = Activity::get();
     
@@ -46,7 +47,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->authorize('create bookings');
+        $this->authorize('create bookings');
 
         $this->validate($request, [
             'traveller_name' => 'required',
@@ -83,7 +84,8 @@ class BookingController extends Controller
         $booking->to_date = $request->to_date;
         $booking->save();
 
-        // flash("{$booking->booking_no} created.")->success();
+        flash("{$booking->booking_no} created.")->success();
+
         return redirect()->route('bookings.index');
 
     }
@@ -215,7 +217,7 @@ class BookingController extends Controller
     public function update(Request $request, $booking)
     {
 
-          // $this->authorize('create bookings');
+          $this->authorize('update bookings');
 
           $this->validate($request, [
             'traveller_name' => 'required',
@@ -259,7 +261,7 @@ class BookingController extends Controller
     public function cancel(Request $request, $bookingId)
     {
 
-          // $this->authorize('create bookings');
+          $this->authorize('cancel bookings');
         
         $book = Booking::findorfail($bookingId);
 
@@ -283,7 +285,7 @@ class BookingController extends Controller
     public function confirm(Request $request, $bookingId)
     {
 
-          // $this->authorize('create bookings');
+          $this->authorize('confirm bookings');
 
           $this->validate($request, [
             'amount' => 'required',
@@ -308,7 +310,7 @@ class BookingController extends Controller
             $payment->remarks = $request->remarks;
             $payment->save();
   
-            // flash("{$booking->traveller_name} created.")->success();
+            flash("{$booking->booking_no} confirmed.")->success();
 
           return redirect()->route('bookings.index');
         

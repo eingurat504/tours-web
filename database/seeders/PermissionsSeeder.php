@@ -88,7 +88,7 @@ class PermissionsSeeder extends Seeder
             8 =>
             array (
                 'id' => 9,
-                'name' => 'Create Booking',
+                'name' => 'View Bookings',
                 'guard_name' => 'web',
                 'created_at' => '2018-11-14 14:09:52',
                 'updated_at' => '2018-11-14 14:09:52',
@@ -96,7 +96,7 @@ class PermissionsSeeder extends Seeder
             9 =>
             array (
                 'id' => 10,
-                'name' => 'Confirm Booking',
+                'name' => 'Create Bookings',
                 'guard_name' => 'web',
                 'created_at' => '2018-11-14 14:09:52',
                 'updated_at' => '2018-11-14 14:09:52',
@@ -104,7 +104,7 @@ class PermissionsSeeder extends Seeder
             10 =>
             array (
                 'id' => 11,
-                'name' => 'Cancel Booking',
+                'name' => 'Confirm Bookings',
                 'guard_name' => 'web',
                 'created_at' => '2018-11-14 14:09:52',
                 'updated_at' => '2018-11-14 14:09:52',
@@ -112,20 +112,28 @@ class PermissionsSeeder extends Seeder
             11 =>
             array (
                 'id' => 12,
+                'name' => 'Update Bookings',
+                'guard_name' => 'web',
+                'created_at' => '2018-11-14 14:09:52',
+                'updated_at' => '2018-11-14 14:09:52',
+            ),
+            12 =>
+            array (
+                'id' => 13,
                 'name' => 'View Payments',
                 'guard_name' => 'web',
                 'created_at' => '2018-11-14 14:09:52',
                 'updated_at' => '2018-11-14 14:09:52',
             ), 
-            12 =>
+            13 =>
             array (
-                'id' => 13,
+                'id' => 14,
                 'name' => 'View Permissions',
                 'guard_name' => 'web',
                 'created_at' => '2023-03-19 16:48:44',
                 'updated_at' => '2023-03-19 16:48:44',
             ),
-            13 =>
+            14 =>
             array (
                 'id' => 15,
                 'name' => 'Create Permissions',
@@ -153,6 +161,14 @@ class PermissionsSeeder extends Seeder
             array (
                 'id' => 18,
                 'name' => 'Delete Permissions',
+                'guard_name' => 'web',
+                'created_at' => '2023-03-19 16:48:44',
+                'updated_at' => '2023-03-19 16:48:44',
+            ),  
+            18 =>
+            array (
+                'id' => 19,
+                'name' => 'Cancel Bookings',
                 'guard_name' => 'web',
                 'created_at' => '2023-03-19 16:48:44',
                 'updated_at' => '2023-03-19 16:48:44',
