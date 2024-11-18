@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -91,7 +92,7 @@ class RolesDataTable extends DataTable
     {
 
         return $this->builder()
-                    ->setTableId('activities-table')
+                    ->setTableId('roles-table')
                     ->columns($this->getColumns())
                     ->language([
                         'emptyTable' => "No Roles available",
@@ -132,7 +133,7 @@ class RolesDataTable extends DataTable
     {
         return [    
             Column::make('name'),
-            Column::make('description'),
+            Column::make('guard_name'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('actions')
@@ -150,7 +151,7 @@ class RolesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'roles_' . date('YmdHis');
+        return 'Roles_' . date('YmdHis');
     }
 
         /**
@@ -166,8 +167,8 @@ class RolesDataTable extends DataTable
         }*/
 
         $routes = [
-            'view' => route('roles.show', $role->id),
-            'edit' => route('roles.edit',$role->id)
+            'edit' => route('roles.edit',$role->id),
+            'permissions' => route('roles.permissions', $role->id),
         ];
 
         $actions = ' ';
@@ -175,7 +176,7 @@ class RolesDataTable extends DataTable
         // if ($this->user->can('view roles')) {
             $actions .= '
             <li>
-                <a href="' . $routes['view'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                <a href="' . $routes['edit'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
                         <circle cx="12" cy="12" r="3" />
@@ -187,7 +188,7 @@ class RolesDataTable extends DataTable
             // if ($this->user->can('view Activities')) {
             $actions .= '
             <li>
-                <a href="' . $routes['edit'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                <a href="' . $routes['permissions'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 15l3.536 3.536 7.071-7.071-3.536-3.536L9 15zM4 20l4-1-3-3-1 4z" />
                     </svg>
