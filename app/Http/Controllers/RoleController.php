@@ -27,7 +27,7 @@ class RoleController extends Controller
      */
     public function show($roleId){
 
-        // $this->authorize('view', [Role::class, $roleId]);
+        $this->authorize('view', [Role::class, $roleId]);
 
         $role = Role::findOrfail($roleId);
         
@@ -43,13 +43,12 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', [Role::class]);
+        $this->authorize('create', [Role::class]);
 
         return view('roles.create');
     }
 
-
-          /**
+    /**
      * Create Role
      *
      * @param Request $request
@@ -60,7 +59,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
 
-        // $this->authorize('create', [Role::class]);
+        $this->authorize('create', [Role::class]);
 
         $this->validate($request, [
             'name' => 'required',
@@ -69,18 +68,16 @@ class RoleController extends Controller
 
         $role = new Role();
         $role->name = $request->name;
-        // $role->description = $request->description;
         $role->save();
 
-        // flash("{$role->name} created.")->success();
+        flash("{$role->name} created.")->success();
 
         return redirect()->route('roles.index');
 
     }
 
-
-       /**
-     * Update User
+    /**
+     * Update Role
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -89,27 +86,25 @@ class RoleController extends Controller
      */
     public function update(Request $request, $roleId)
     {
-        // $this->authorize('update', [Role::class, $roleId]);
+        $this->authorize('update', [Role::class, $roleId]);
 
         $this->validate($request, [
             'name' => 'sometimes',
-            'description' => 'sometimes',
         ]);
 
         $role = Role::findOrfail($roleId);
 
         $role->name = $request->input('name', $role->name);
-        // $role->description = $request->input('description', $role->description);
         $role->save();
 
-        // flash("{$role->name} updated.")->success();
+        flash("{$role->name} updated.")->success();
 
         return redirect()->route('roles.index');
 
     }
 
        /**
-     * Remove the specified role from storage.
+     * Remove Role.
      *
      * @param int $roleId
      *
@@ -120,7 +115,7 @@ class RoleController extends Controller
      */
     public function destroy($roleId)
     {
-        // $this->authorize('delete', [Role::class]);
+        $this->authorize('delete', [Role::class]);
 
         $role = Role::findOrFail($roleId);
 
@@ -178,7 +173,7 @@ class RoleController extends Controller
      */
     public function permissions($roleId)
     {
-        // $this->authorize('syncPermissions', [Role::class, $roleId]);
+        $this->authorize('syncPermissions', [Role::class, $roleId]);
 
         $role = Role::findOrFail($roleId);
 
@@ -201,7 +196,7 @@ class RoleController extends Controller
      */
     public function syncPermissions(Request $request, $roleId)
     {
-        // $this->authorize('syncPermissions', [Role::class, $roleId]);
+        $this->authorize('syncPermissions', [Role::class, $roleId]);
 
         $role = Role::findOrFail($roleId);
 
