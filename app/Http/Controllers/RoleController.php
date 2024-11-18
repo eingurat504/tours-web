@@ -17,6 +17,9 @@ class RoleController extends Controller
      */
     public function index(RolesDataTable $dataTable)
     {
+
+        $this->authorize('viewAny', [Role::class]);
+
         return $dataTable->render('roles.index');
 
     }

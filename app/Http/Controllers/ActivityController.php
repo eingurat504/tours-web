@@ -17,7 +17,7 @@ class ActivityController extends Controller
     public function index(ActivitiesDataTable $dataTable)
     {
 
-        $this->authorize('View Activities', [Activity::class]);
+        $this->authorize('viewAny', [Activity::class]);
 
         return $dataTable->render('activities.index');
 
@@ -31,7 +31,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        $this->authorize('Create Activities', [Activity::class]);
+        $this->authorize('create', [Activity::class]);
 
         return view('activities.create');
     }
@@ -44,7 +44,7 @@ class ActivityController extends Controller
      */
     public function activities()
     {
-        $this->authorize('Create Activities', [Activity::class]);
+        $this->authorize('create', [Activity::class]);
 
         $events = [];
  
@@ -71,7 +71,7 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
 
-        $this->authorize('Create Activities', [Activity::class]);
+        $this->authorize('create', [Activity::class]);
     
         $this->validate($request, [
             'activity_name' => 'required',
@@ -101,6 +101,8 @@ class ActivityController extends Controller
     public function show($activityId)
     {
 
+        $this->authorize('view', [Activity::class,$activityId]);
+
         $activity = Activity::find($activityId);
 
         return view('activities.show', [
@@ -111,11 +113,13 @@ class ActivityController extends Controller
      /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Activity  $activity
+     * @param  $activityid
      * @return \Illuminate\Http\Response
      */
     public function edit($activityId)
     {
+
+        $this->authorize('update', [Activity::class, $activityId]);
 
         $activity = Activity::find($activityId);
 
@@ -128,12 +132,12 @@ class ActivityController extends Controller
      * Update activity.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Activity  $activity
+     * @param  $activityId
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $activityId)
     {
-        $this->authorize('Update Activities', [Activity::class, $activityId]);
+        $this->authorize('update', [Activity::class, $activityId]);
 
         $this->validate($request, [
             'activity_name' => 'required',
@@ -156,9 +160,9 @@ class ActivityController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove activity.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param  $activityId
      * @return \Illuminate\Http\Response
      */
     public function destroy($activityId)
