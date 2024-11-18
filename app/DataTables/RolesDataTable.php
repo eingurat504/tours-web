@@ -173,19 +173,18 @@ class RolesDataTable extends DataTable
 
         $actions = ' ';
 
-        // if ($this->user->can('view roles')) {
+        // if ($this->user->can('update roles')) {
             $actions .= '
             <li>
                 <a href="' . $routes['edit'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
-                        <circle cx="12" cy="12" r="3" />
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 15l3.536 3.536 7.071-7.071-3.536-3.536L9 15zM4 20l4-1-3-3-1 4z" />
                     </svg>
                 </a>
             </li>';
         // }
 
-            // if ($this->user->can('view Activities')) {
+            // if ($this->user->can('sync permissions')) {
             $actions .= '
             <li>
                 <a href="' . $routes['permissions'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">

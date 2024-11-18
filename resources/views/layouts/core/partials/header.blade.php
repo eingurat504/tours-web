@@ -12,8 +12,12 @@
         <div class="flex items-center space-x-2">
           <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
           <div class="text-right">
-            <p class="text-gray-600 font-semibold">Thomas Anree</p>
-            <a href="/logout" class="text-sm text-gray-400">Log out</a>
+            <p class="text-gray-600 font-semibold">{{ Auth::user()->name }}</p>
+            <a href="/logout" class="text-sm text-gray-400" 
+            onclick="event.preventDefault();document.getElementById('logout-form').submit();">Log out</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+            </form>
           </div>
           <i class="fas fa-chevron-down text-gray-500"></i>
         </div>

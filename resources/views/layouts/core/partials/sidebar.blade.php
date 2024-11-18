@@ -52,7 +52,7 @@
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-file-invoice"></i>
-          <span>Invoice</span>
+          <span>Activities Report</span>
         </div>
       </a>
     </div>

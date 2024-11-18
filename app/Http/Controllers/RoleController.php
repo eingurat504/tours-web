@@ -36,6 +36,21 @@ class RoleController extends Controller
         ]);
     }
 
+
+        /**
+     * Get user
+     */
+    public function edit($roleId){
+
+        // $this->authorize('view', [Role::class, $roleId]);
+
+        $role = Role::findOrfail($roleId);
+        
+        return view('roles.edit',[
+            'role' => $role
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
