@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use App\DataTables\RolesDataTable;
 
 class RoleController extends Controller
 {
 
     /**
-     * Display bookings.
+     * Display Roles.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,7 +42,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', [Booking::class]);
+        // $this->authorize('create', [Role::class]);
 
         return view('roles.create');
     }

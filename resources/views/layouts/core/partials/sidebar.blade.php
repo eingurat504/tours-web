@@ -65,7 +65,7 @@
           <span>Users</span>
         </div>
       </a>
-      <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
+      <a href="{{ route('roles.index') }}" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-cubes"></i>
           <span>Roles</span>
@@ -85,7 +85,7 @@
     <div class="flex items-center space-x-3">
       <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
       <div>
-        <p class="font-medium">{{ Auth::user()->first_name }}</p>
+        <p class="font-medium">{{ Auth::user()->name }}</p>
         <a href="{{ route('logout') }}" class="text-sm text-gray-400 hover:text-gray-200" 
         onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST">
