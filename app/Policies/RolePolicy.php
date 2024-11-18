@@ -10,7 +10,7 @@ class RolePolicy
     use HandlesAuthorization;
 
   /**
-     * Determine whether the user can view any role.
+     * Determine whether the user can View any role.
      *
      * @param \App\Models\User $user
      *
@@ -18,11 +18,11 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view-any roles');
+        return $user->can('view-any Roles');
     }
 
     /**
-     * Determine whether the user can view a role.
+     * Determine whether the user can View a role.
      *
      * @param \App\Models\User $user
      * @param int $roleId
@@ -35,11 +35,11 @@ class RolePolicy
             return true;
         }
 
-        return $user->can('view roles');
+        return $user->can('View Roles');
     }
 
     /**
-     * Determine whether the user can create roles.
+     * Determine whether the user can create Roles.
      *
      * @param \App\Models\User $user
      *
@@ -47,7 +47,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create roles');
+        return $user->can('Create Roles');
     }
 
     /**
@@ -64,7 +64,7 @@ class RolePolicy
             return true;
         }
 
-        return $user->can('update roles');
+        return $user->can('Update Roles');
     }
 
     /**
@@ -77,7 +77,7 @@ class RolePolicy
      */
     public function delete(User $user, int $roleId)
     {
-        return $user->can('delete roles');
+        return $user->can('Delete Roles');
     }
 
     /**
@@ -90,7 +90,7 @@ class RolePolicy
      */
     public function syncPermissions(User $user, int $roleId)
     {
-        return $user->can('sync-permissions roles');
+        return $user->can('Sync-Permissions Roles');
     }
     
 }

@@ -10,12 +10,15 @@ class ActivityController extends Controller
 {
 
     /**
-     * Display bookings.
+     * Display activities.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(ActivitiesDataTable $dataTable)
     {
+
+        $this->authorize('View Activities', [Activity::class]);
+
         return $dataTable->render('activities.index');
 
     }
@@ -28,7 +31,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', [Booking::class]);
+        $this->authorize('Create Activities', [Activity::class]);
 
         return view('activities.create');
     }
@@ -41,14 +44,14 @@ class ActivityController extends Controller
      */
     public function activities()
     {
-        // $this->authorize('create', [Booking::class]);
+        $this->authorize('Create Activities', [Activity::class]);
+
         $events = [];
  
         $activities = Booking::where('status', 'pending')->get();
 
         foreach ($activities as $activity) {
             $events[] = [
-                // 'title' => $activity->client->name . ' ('.$activity->employee->name.')',
                 'title' => $activity->traveller_name,
                 'activities' => $activity->booking_no,
                 'start' => $activity->from_date,
@@ -67,6 +70,8 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->authorize('Create Activities', [Activity::class]);
     
         $this->validate($request, [
             'activity_name' => 'required',
@@ -82,7 +87,7 @@ class ActivityController extends Controller
         $activity->amount = $request->amount;
         $activity->save();
 
-        // flash("{$activity->activity_name} created.")->success();
+        flash("{$activity->activity_name} created.")->success();
 
         return redirect()->route('activities.index');
     }
@@ -120,7 +125,7 @@ class ActivityController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update activity.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Activity  $activity
@@ -128,7 +133,8 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $activityId)
     {
-        //
+        $this->authorize('Update Activities', [Activity::class, $activityId]);
+
         $this->validate($request, [
             'activity_name' => 'required',
             'duration' => 'required',
@@ -144,7 +150,7 @@ class ActivityController extends Controller
         $activity->amount = $request->input('amount', $activity->amount);
         $activity->save();
 
-        // flash("{$booking->traveller_name} created.")->success();
+        flash("{$activity->activity_name} updated.")->success();
 
         return redirect()->route('activities.index');
     }
@@ -155,7 +161,7 @@ class ActivityController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking)
+    public function destroy($activityId)
     {
         //
     }

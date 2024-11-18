@@ -38,8 +38,7 @@ class RolesDataTable extends DataTable
      */
     public function __construct(Request $request)
     {
-        // dd(auth()->user()->userable->farmer_union_id);
-    //     $this->user = $request->user();
+        $this->user = $request->user();
    
     }
     
@@ -173,7 +172,7 @@ class RolesDataTable extends DataTable
 
         $actions = ' ';
 
-        // if ($this->user->can('update roles')) {
+        if (Auth::user()->can('Update Roles')) {
             $actions .= '
             <li>
                 <a href="' . $routes['edit'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
@@ -182,9 +181,9 @@ class RolesDataTable extends DataTable
                     </svg>
                 </a>
             </li>';
-        // }
+        }
 
-            // if ($this->user->can('sync permissions')) {
+            if (Auth::user()->can('Sync-Permissions Roles')) {
             $actions .= '
             <li>
                 <a href="' . $routes['permissions'] . '" class="bg-green-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
@@ -193,6 +192,8 @@ class RolesDataTable extends DataTable
                     </svg>
                 </a>
             </li>';      
+
+            }
 
         return $actions;
     }

@@ -69,6 +69,23 @@ class BookingPolicy
     }
 
     /**
+     * Determine whether the user can update a role.
+     *
+     * @param \App\Models\User $user
+     * @param int $bookingId
+     *
+     * @return bool
+     */
+    public function confirm(User $user, int $bookingId)
+    {
+        if ($user->id == $bookingId) {
+            return true;
+        }
+
+        return $user->can('confirm bookings');
+    }
+
+    /**
      * Determine whether the user can delete a role.
      *
      * @param \App\Models\User $user

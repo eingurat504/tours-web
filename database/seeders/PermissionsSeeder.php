@@ -152,23 +152,47 @@ class PermissionsSeeder extends Seeder
             16 =>
             array (
                 'id' => 17,
-                'name' => 'Sync-Permissions Roles',
-                'guard_name' => 'web',
-                'created_at' => '2023-03-19 16:48:44',
-                'updated_at' => '2023-03-19 16:48:44',
-            ),
-            17 =>
-            array (
-                'id' => 18,
                 'name' => 'Delete Permissions',
                 'guard_name' => 'web',
                 'created_at' => '2023-03-19 16:48:44',
                 'updated_at' => '2023-03-19 16:48:44',
             ),  
+            17 =>
+            array (
+                'id' => 18,
+                'name' => 'View Roles',
+                'guard_name' => 'web',
+                'created_at' => '2023-03-19 16:48:44',
+                'updated_at' => '2023-03-19 16:48:44',
+            ),
             18 =>
             array (
                 'id' => 19,
-                'name' => 'Cancel Bookings',
+                'name' => 'Create Roles',
+                'guard_name' => 'web',
+                'created_at' => '2023-03-19 16:48:44',
+                'updated_at' => '2023-03-19 16:48:44',
+            ),
+            19 =>
+            array (
+                'id' => 20,
+                'name' => 'Update Roles',
+                'guard_name' => 'web',
+                'created_at' => '2023-03-19 16:48:44',
+                'updated_at' => '2023-03-19 16:48:44',
+            ),
+            20 =>
+            array (
+                'id' => 21,
+                'name' => 'Delete Roles',
+                'guard_name' => 'web',
+                'created_at' => '2023-03-19 16:48:44',
+                'updated_at' => '2023-03-19 16:48:44',
+            ),
+            21 =>
+            array (
+                'id' => 22,
+                'name' => 'Sync-Permissions Roles',
                 'guard_name' => 'web',
                 'created_at' => '2023-03-19 16:48:44',
                 'updated_at' => '2023-03-19 16:48:44',

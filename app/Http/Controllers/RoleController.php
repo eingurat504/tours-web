@@ -23,7 +23,7 @@ class RoleController extends Controller
 
     
     /**
-     * Get user
+     * Get role
      */
     public function show($roleId){
 
@@ -38,11 +38,11 @@ class RoleController extends Controller
 
 
         /**
-     * Get user
+     * Get role
      */
     public function edit($roleId){
 
-        // $this->authorize('view', [Role::class, $roleId]);
+        $this->authorize('update', [Role::class, $roleId]);
 
         $role = Role::findOrfail($roleId);
         

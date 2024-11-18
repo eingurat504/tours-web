@@ -18,6 +18,8 @@ class BookingController extends Controller
      */
     public function index(BookingsDataTable $dataTable)
     {
+        $this->authorize('View Bookings', [Booking::class]);
+
         return $dataTable->render('bookings.index');
     }
 
@@ -29,7 +31,7 @@ class BookingController extends Controller
     public function create()
     {
         //
-        $this->authorize('create', [Booking::class]);
+        $this->authorize('Create Bookings', [Booking::class]);
 
         $packages = Package::get();
         $activities = Activity::get();
@@ -47,7 +49,8 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create bookings');
+
+        $this->authorize('Create Bookings', [Booking::class]);
 
         $this->validate($request, [
             'traveller_name' => 'required',
@@ -217,7 +220,7 @@ class BookingController extends Controller
     public function update(Request $request, $booking)
     {
 
-          $this->authorize('update bookings');
+          $this->authorize('Update Bookings');
 
           $this->validate($request, [
             'traveller_name' => 'required',
