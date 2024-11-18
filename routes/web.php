@@ -37,17 +37,6 @@ Route::group(['prefix' => '/role', 'as' => 'roles.'], function () {
     Route::put('/{role}/permissions', [App\Http\Controllers\RoleController::class , 'syncPermissions'])->name('permissions.sync');
 });
 
-Route::pattern('event', $int);
-
-Route::group(['prefix' => '/events', 'as' => 'events.'], function () { 
-    Route::get('/', [App\Http\Controllers\ActivityController::class, 'activities'])->name('index');
-    // Route::get('/{event}', [App\Http\Controllers\ActivityController::class, 'show'])->name('show');
-    // Route::get('/{event}/edit', [App\Http\Controllers\ActivityController::class, 'edit'])->name('edit');
-    // Route::put('/{activity}/update', [App\Http\Controllers\ActivityController::class, 'update'])->name('update');
-    // Route::get('/create', [App\Http\Controllers\ActivityController::class, 'create'])->name('create');
-    // Route::post('/', [App\Http\Controllers\ActivityController::class , 'store'])->name('store');
-});
-
 Route::pattern('permission', $int);
 
 Route::group(['prefix' => '/permission', 'as' => 'permissions.'], function () { 
