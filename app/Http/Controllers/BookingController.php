@@ -73,7 +73,7 @@ class BookingController extends Controller
         $booking->traveller_phone_no = $request->traveller_phone_no;
         $booking->traveller_flight_no = $request->traveller_flight_no;
         $booking->package_id = $request->package;
-        $booking->status = 'reserve';
+        $booking->status = 'reserved';
         $booking->no_of_adults = $request->no_of_adults;
         $booking->total_amount = $total_amount;
         $booking->no_of_children = $request->no_of_children;
