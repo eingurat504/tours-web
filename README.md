@@ -46,12 +46,14 @@ This web application allows users to browse and book activities, manage reservat
     composer install
 
 3. Environment Configuration
-   ### Copy the .env.example file and update the environment variables as needed:
+   
+   Copy the .env.example file and update the environment variables as needed:
    ```bash
     cp .env.example .env
 
 4. Set Up Your Environment
-   ### Update your .env file with the following configurations:
+   
+   Update your .env file with the following configurations:
    ```bash
     APP_NAME="Tours Web"
     APP_ENV=local
@@ -67,30 +69,30 @@ This web application allows users to browse and book activities, manage reservat
     DB_PASSWORD=your_database_password
 
 5. Generate Application Key
-   ### Run the following command to generate the application key:
+   
+   Run the following command to generate the application key:
    ```bash
     php artisan key:generate
 
 
 6. Run Database Migrations and Seeders
-
-  Run migrations to set up the database schema and seeders to populate the initial data:
+   
+   Run migrations to set up the database schema and seeders to populate the initial data:
 
    ```bash
     php artisan migrate --seed
 
 
 7. Serve the Application
-   ### Start the development server:
+   
+   Start the development server:
    ```bash
     php artisan serve
 
 ## Usage
 
 Access the Application
-
 Once the server is running, you can access the application at:
-
     http://localhost:8000
 
 ## Default Admin Credentials
