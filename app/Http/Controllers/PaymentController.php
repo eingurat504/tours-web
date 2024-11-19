@@ -35,7 +35,7 @@ class PaymentController extends Controller
      */
     public function destroy($paymentId)
     {
-        $this->authorize('Delete Payments', [Payment::class, $paymentId]);
+        $this->authorize('delete', [Payment::class, $paymentId]);
 
         $payment = Payment::findOrFail($paymentId);
 
