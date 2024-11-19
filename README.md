@@ -87,9 +87,8 @@ This web application allows users to browse and book activities, manage reservat
 
 ## Usage
 
-    Access the Application
-    Once the server is running, you can access the application at:
-
+Access the Application
+Once the server is running, you can access the application at:
     ```bash
     http://localhost:8000
 
