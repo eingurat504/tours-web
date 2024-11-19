@@ -45,7 +45,7 @@ This web application allows users to browse and book activities, manage reservat
     ```bash
     composer install
 
-3. Environment Configuration
+    3. Environment Configuration
    Copy the .env.example file and update the environment variables as needed:
    ```bash
     cp .env.example .env
@@ -67,9 +67,37 @@ This web application allows users to browse and book activities, manage reservat
     DB_PASSWORD=your_database_password
 
 5. Generate Application Key
-Run the following command to generate the application key:
+    Run the following command to generate the application key:
    ```bash
     php artisan key:generate
+
+
+6. Run Database Migrations and Seeders
+    Run migrations to set up the database schema and seeders to populate the initial data:
+
+   ```bash
+    php artisan migrate --seed
+
+
+7. Serve the Application
+    Start the development server:
+   ```bash
+    php artisan serve
+
+
+## Usage
+
+    Access the Application
+    Once the server is running, you can access the application at:
+
+    ```bash
+    http://localhost:8000
+
+## Default Admin Credentials
+The seeding process will create a default Super Administrator user. Use the following credentials to log in:
+
+Email: superadmin@admin.com
+Password: 12345678
 
 
 
