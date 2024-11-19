@@ -45,7 +45,7 @@ This web application allows users to browse and book activities, manage reservat
     ```bash
     composer install
 
-    3. Environment Configuration
+3. Environment Configuration
    Copy the .env.example file and update the environment variables as needed:
    ```bash
     cp .env.example .env
