@@ -89,12 +89,11 @@ This web application allows users to browse and book activities, manage reservat
 
 Access the Application
 Once the server is running, you can access the application at:
-    ```bash
     http://localhost:8000
 
 ## Default Admin Credentials
 The seeding process will create a default Super Administrator user. Use the following credentials to log in:
-
+```bash
 Email: superadmin@admin.com
 Password: 12345678
 
