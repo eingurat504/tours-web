@@ -73,7 +73,7 @@ This web application allows users to browse and book activities, manage reservat
 
 
 6. Run Database Migrations and Seeders
-   Run migrations to set up the database schema and seeders to populate the initial data:
+     Run migrations to set up the database schema and seeders to populate the initial data:
 
    ```bash
     php artisan migrate --seed
