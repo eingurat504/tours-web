@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentLog;
+use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,6 +18,8 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
+        $this->authorize('viewAny', [User::class]);
+
         return $dataTable->render('users.index');
     }
 
@@ -27,7 +31,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        // $this->authorize('create', [Booking::class]);
+        $this->authorize('create', [User::class]);
         $roles = Role::get();
     
         return view('users.create',[
@@ -46,31 +50,29 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        // $this->authorize('create', [User::class]);
+        $this->authorize('create', [User::class]);
 
         $this->validate($request, [
-            'first_name' => 'required',
-            'last_name' => 'sometimes',
-            'email' => 'sometimes|email',
-            'gender' => 'sometimes|boolean',
-            'roles' => 'required|exists:roles,id',
-            'phone_number' => 'sometimes|max:255',
-            'address' => 'sometimes|max:255',
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'roles' => 'required',
         ]);
 
         $user = new User();
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->assignRole([$request->roles]);
+        $numericRoleArray = [];
+        foreach($request->roles as $role) {
+            $numericRoleArray[] = intval($role);
+        }
+
+        $user->syncRoles($numericRoleArray);
+        $user->name = $request->name;
+        $user->status = 'active';
         $user->email = $request->email;
-        // $user->phone_number = $request->phone_number;
-        // $user->gender = $request->gender;
-        // $user->username = $request->username;
-        $user->password = Hash::make("$request->first_name"."$request->last_name");
-        // $user->address = $request->address;
+        $user->password = Hash::make("$request->password");
         $user->save();
 
-        // flash("{$user->name} created.")->success();
+        flash("{$user->name} created.")->success();
 
         return redirect()->route('users.index');
 
@@ -88,28 +90,23 @@ class UserController extends Controller
     public function update(Request $request, $userId)
     {
 
-        // $this->authorize('create', [User::class]);
+        $this->authorize('update', [User::class]);
 
         $this->validate($request, [
-            'first_name' => 'required',
-            'last_name' => 'sometimes',
+            'name' => 'required',
             'email' => 'sometimes|email',
-            'gender' => 'sometimes|boolean',
             'roles' => 'required|exists:roles,id',
-            'phone_number' => 'sometimes|max:255',
-            'address' => 'sometimes|max:255',
         ]);
 
         $user = User::findorfail($userId);
 
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
+        $user->name = $request->name;
         $user->assignRole([$request->roles]);
         $user->email = $request->email;
         $user->password = Hash::make("$request->first_name"."$request->last_name");
         $user->save();
 
-        // flash("{$user->name} created.")->success();
+        flash("{$user->name} updated.")->success();
 
         return redirect()->route('users.index');
 
@@ -121,7 +118,7 @@ class UserController extends Controller
      */
     public function show($userId){
 
-        // $this->authorize('view', [User::class, $userId]);
+        $this->authorize('view', [User::class, $userId]);
 
         $user = User::findOrfail($userId);
         
@@ -139,7 +136,7 @@ class UserController extends Controller
     public function edit(Request $request, $userId)
     {
 
-        // $this->authorize('update', [User::class, $userId]);
+        $this->authorize('update', [User::class, $userId]);
 
         $user = User::findOrfail($userId);
 
@@ -160,13 +157,11 @@ class UserController extends Controller
      */
     public function destroy($userId)
     {
-        // $this->authorize('force-delete', [User::class, $userId]);
+        $this->authorize('delete', [User::class, $userId]);
 
         $user = User::withTrashed()->findOrFail($userId);
 
         $user->forceDelete();
-
-        Toastr::error($user->name, 'Deleted', ['closeButton' => true, 'timeOut' => 5000]);
 
         return redirect()->route('users.index');
     }

@@ -169,28 +169,28 @@ class BookingsDataTable extends DataTable
      */
     protected function buildActions($booking)
     {
-        /*if ($this->user == null) {
+        if (Auth::user() == null) {
             return '';
-        }*/
+        }
 
         $routes = [
             'confirm' => route('bookings.confirm',$booking->id),
-            // 'reserve' => route('bookings.reserve',$booking->id)
+            'view' => route('bookings.show',$booking->id)
         ];
 
         $actions = ' ';
 
-        // if ($this->user->can('view bookings')) {
-            // $actions .= '
-            // <li>
-            //     <a href="' . $routes['reserve'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
-            //         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            //             <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
-            //             <circle cx="12" cy="12" r="3" />
-            //         </svg>
-            //     </a>
-            // </li>';
-        // }
+        if (Auth::user()->can('view bookings')) {
+            $actions .= '
+            <li>
+                <a href="' . $routes['view'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M1 12c2.5-4 6.5-6 11-6s8.5 2 11 6c-2.5 4-6.5 6-11 6s-8.5-2-11-6z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </a>
+            </li>';
+        }
 
         if ($booking->status == 'reserved') {
                 $actions .= '

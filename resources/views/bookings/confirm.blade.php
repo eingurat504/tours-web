@@ -114,7 +114,7 @@
                     <label for="amount" class="block text-sm font-medium text-gray-700">Amount:</label>
                     <input type="text" id="amount" name="amount" value="{{ old('amount') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('amount') is-invalid @enderror">
                     @error('activity_name')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror  
                 </div>
 
@@ -122,7 +122,7 @@
                     <label for="remarks" class="block text-sm font-medium text-gray-700">remarks</label>
                     <textarea id="remarks" name="remarks" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">{{ old('remarks') }}</textarea>
                     @error('remarks')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror   
                 </div>
 

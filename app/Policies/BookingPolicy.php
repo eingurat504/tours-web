@@ -19,7 +19,7 @@ class BookingPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view-any bookings');
+        return $user->can('View Bookings');
     }
 
     /**
@@ -36,7 +36,7 @@ class BookingPolicy
             return true;
         }
 
-        return $user->can('view bookings');
+        return $user->can('View Bookings');
     }
 
     /**
@@ -48,7 +48,7 @@ class BookingPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create bookings');
+        return $user->can('Create Bookings');
     }
 
     /**
@@ -65,7 +65,24 @@ class BookingPolicy
             return true;
         }
 
-        return $user->can('update bookings');
+        return $user->can('Update Bookings');
+    }
+
+    /**
+     * Determine whether the user can update a role.
+     *
+     * @param \App\Models\User $user
+     * @param int $bookingId
+     *
+     * @return bool
+     */
+    public function confirm(User $user, int $bookingId)
+    {
+        if ($user->id == $bookingId) {
+            return true;
+        }
+
+        return $user->can('Confirm Bookings');
     }
 
     /**
@@ -78,7 +95,7 @@ class BookingPolicy
      */
     public function delete(User $user, int $bookingId)
     {
-        return $user->can('delete bookings');
+        return $user->can('Delete Bookings');
     }
 
 }

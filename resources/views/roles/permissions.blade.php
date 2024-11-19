@@ -13,52 +13,33 @@
 @endsection
 
 @section('content')
+<h6 class="text-xl font-bold mb-4">PERMISSIONS</h6>
 <form method="POST" action="{{ route('roles.permissions.sync', $role->id)  }}">
     @csrf
     @method('PUT')
+    <div class="mt-6 bg-white p-4 rounded shadow-md">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Pemissions Granted</h2>
+        </div>
 
-    <div class="row">
-        <div class="col-lg-12 col-md-6 col-sm-12">
-            <!-- Panel -->
-            <div class="panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Permissions</h3>
-                </div>
-                <div class="panel-body">
-                        <div class="row">
-                            @foreach($role->permissions as $permission) 
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="form-group">
-                                    <label class="form-check-label" for="{{ $permission['id'] }}">
-                                                <input type="checkbox" class="form-check-input"
-                                                        id="{{ $permission['id'] }}"
-                                                        name="permissions[]"
-                                                        value="{{ $permission['id'] }}" {{ ($permission['granted'] === true) ? 'checked' : '' }} />
-                                                {{ $permission['name'] }}
-                                            </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-xs-6 col-md-3 col-lg-3">
-                            <a href="{{ route('roles.index') }}"
-                                class="btn btn-block btn-light btn-lg font-weight-medium auth-form-btn">
-                                {{ __('CANCEL') }}
-                            </a>
-
-                        </div>
-                        <div class="col-sm-6 col-xs-6 col-md-3 col-lg-3">
-                            <button type="submit" class="btn btn-block btn-success btn-lg">
-                                <i class="icon md-minus-square" aria-hidden="true"></i>
-                                <span class="hidden-sm-down">sync</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div class="flex flex-wrap gap-5 mb-4">
+            @foreach($role->permissions as $permission) 
+            <div class="flex items-center">
+                <input id="{{ $permission['id'] }}" type="checkbox" name="permissions[]"
+                value="{{ $permission['id'] }}" {{ ($permission['granted'] === true) ? 'checked' : '' }} class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                <label for="{{ $permission['id'] }}" class="ml-2 text-gray-700">{{ $permission['name'] }}</label>
             </div>
+            @endforeach
+        </div>
+
+        <hr/>
+        <div class="mt-4">
+            <a href="{{ route('roles.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"> <i class="fas fa-plus"></i>Cancel</a>
+            <button type="submit" class="bg-green-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas fa-plus"></i>Sync</button>
         </div>
     </div>
 </form>  
+
+
+
 @endsection

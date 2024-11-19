@@ -1,16 +1,5 @@
 @extends('layouts.core.base')
 
-@section('title', 'Activities')
-
-@section('breadcrumb')
-    <h1 class="page-title">Activities</h1>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('activities.index') }}">Activities</a></li>
-        <li class="breadcrumb-item active">Create</li>
-    </ol>
-@endsection
-
 @section('content')
 <h6 class="text-xl font-bold mb-4">CREATE</h6>
 <form method="POST" action="{{ route('activities.store') }}">
@@ -22,14 +11,14 @@
                     <label for="activity_name" class="block text-sm font-medium text-gray-700">Activity Name:</label>
                     <input type="text" id="activity_name" name="activity_name" value="{{ old('activity_name') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('activity_name') is-invalid @enderror">
                     @error('activity_name')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror  
                 </div>
                 <div>
                     <label for="duration" class="block text-sm font-medium text-gray-700">Duration (In Hours):</label>
                     <input type="text" id="duration" name="duration" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('duration') is-invalid @enderror">
                     @error('duration')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror   
                 </div>
 
@@ -37,7 +26,7 @@
                     <label for="Description" class="block text-sm font-medium text-gray-700">Description</label>
                     <textarea id="Description" name="description" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">{{ old('description') }}</textarea>
                 @error('description')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror   
                 </div>
 
@@ -45,18 +34,17 @@
                     <label for="amount" class="block text-sm font-medium text-gray-700">Amount:</label>
                     <input type="integer" id="amount" name="amount" value="{{ old('amount') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('amount') is-invalid @enderror">
                     @error('amount')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror  
                 </div>
             </div>
             <hr/>
             <div class="mt-4">
                 <a href="{{ route('activities.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"> <i class="fas fa-plus"></i>Cancel</a>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas fa-plus"></i>Create</button>
+                <button type="submit" class="bg-green-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas fa-plus"></i>Create</button>
             </div>
         </div>
     </div>
 </form>
-
 @endsection
 

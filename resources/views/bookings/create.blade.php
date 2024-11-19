@@ -11,22 +11,22 @@
                 <label for="traveller_name" class="block text-sm font-medium text-gray-700">Traveller_name:</label>
                 <input type="text" id="traveller_name" name="traveller_name" value="{{ old('traveller_name') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('traveller_name') is-invalid @enderror">
                 @error('traveller_name')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror  
             </div>
             <div>
                 <label for="traveller_phone_no" class="block text-sm font-medium text-gray-700">Traveller Phone No:</label>
-                <input type="text" id="traveller_phone_no" name="traveller_phone_no" value="{{ old('traveller_phone_no') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('traveller_name') is-invalid @enderror">
+                <input type="text" id="traveller_phone_no" name="traveller_phone_no" value="{{ old('traveller_phone_no') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('traveller_phone_no') is-invalid @enderror">
                 @error('traveller_phone_no')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror   
             </div>
 
             <div>
                 <label for="traveller_flight_no" class="block text-sm font-medium text-gray-700">Traveller Flight No:</label>
-                <input type="text" id="traveller_flight_no" name="traveller_flight_no" value="{{ old('traveller_flight_no') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('traveller_name') is-invalid @enderror">
+                <input type="text" id="traveller_flight_no" name="traveller_flight_no" value="{{ old('traveller_flight_no') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('traveller_flight_no') is-invalid @enderror">
                 @error('traveller_flight_no')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror   
             </div>
 
@@ -34,7 +34,7 @@
                 <label for="no_of_people" class="block text-sm font-medium text-gray-700">No of People:</label>
                 <input type="text" id="no_of_people" name="no_of_people" value="{{ old('no_of_people') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('no_of_people') is-invalid @enderror">
                 @error('no_of_people')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror     
             </div>
 
@@ -42,7 +42,7 @@
                 <label for="no_of_adults" class="block text-sm font-medium text-gray-700">No of Adults:</label>
                 <input type="text" id="no_of_adults" name="no_of_adults" value="{{ old('no_of_adults') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('no_of_adults') is-invalid @enderror">
                 @error('no_of_adults')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror     
             </div>
 
@@ -50,7 +50,7 @@
                 <label for="no_of_children" class="block text-sm font-medium text-gray-700">No of Children:</label>
                 <input type="text" id="no_of_children" name="no_of_children" value="{{ old('no_of_children') }}" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('no_of_children') is-invalid @enderror">
                 @error('no_of_children')
-                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                 @enderror     
             </div>
 
@@ -63,7 +63,7 @@
                     <label for="from_date" class="block text-sm font-medium text-gray-700">Start Date:</label>
                     <input type="text" id="from_date" name="from_date" data-date-format="YYYY-MM-DD" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('from_date') is-invalid @enderror">
                     @error('from_date')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror     
                 </div>
 
@@ -71,7 +71,7 @@
                     <label for="to_date" class="block text-sm font-medium text-gray-700">End Date:</label>
                     <input type="text" id="to_date" name="to_date" data-date-format="YYYY-MM-DD" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 @error('to_date') is-invalid @enderror">
                     @error('to_date')
-                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        <span class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</span>
                     @enderror     
                 </div>
 
@@ -81,7 +81,7 @@
                     @foreach($activities as $activity)
                         <div class="flex items-center">
                             <input id="textures" type="checkbox" name="activities[]"
-                            value="{{ $activity['amount'] }}" {{ ($activity['id'] === true) ? 'checked' : '' }}  class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                            value="{{ $activity['amount'] }}" {{ ($activity['id'] === true) ? 'checked' : '' }}  class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500" required>
                             <label for="textures" class="ml-2 text-gray-700">{{ $activity->activity_name }} - ${{ $activity->amount }}</label>
 
                             <input type="hidden" name="activities_ids[]" value="{{ $activity['id'] }}">

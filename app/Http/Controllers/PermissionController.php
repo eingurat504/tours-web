@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -23,8 +23,7 @@ class PermissionController extends Controller
      */
     public function index(PermissionsDataTable $dataTable){
 
-        // $this->authorize('viewAny', [Permission::class]);
-        // dd($dataTable->render());
+        $this->authorize('viewAny', [Permission::class]);
 
         return $dataTable->render('permissions.index');
     }

@@ -19,64 +19,85 @@
         </div>
         <i class="fas fa-chevron-down"></i>
       </a>
+
+      @can('viewAny', \App\Models\Activity::class)   
+
       <a href="{{ route('activities.index') }}" class="flex items-center space-x-3 py-2 px-4 rounded hover:bg-gray-700">
         <i class="fas fa-user"></i>
         <span>Activities</span>
       </a>
+      @endcan
+      
+      @can('viewAny', \App\Models\Booking::class)   
       <a href="{{ route('bookings.index') }}" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-tasks"></i>
           <span>Bookings</span>
         </div>
       </a>
+      @endcan
+      @can('viewAny', \App\Models\Payment::class)  
       <a href="{{ route('payments.index') }}" class="flex items-center space-x-3 py-2 px-4 rounded hover:bg-gray-700">
         <i class="fas fa-calendar"></i>
         <span>Payments</span>
       </a>
+      @endcan
     </div>
 
     <div>
       <p class="text-gray-400 uppercase text-xs mb-2">Reports</p>
+      @can('viewAny', \App\Models\Booking::class)  
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-envelope"></i>
           <span>Booking Report</span>
         </div>
       </a>
+      @endcan
+      @can('viewAny', \App\Models\Payment::class)  
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-inbox"></i>
           <span>Payments Report</span>
         </div>
       </a>
+      @endcan
+      @can('viewAny', \App\Models\Activity::class) 
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-file-invoice"></i>
-          <span>Invoice</span>
+          <span>Activities Report</span>
         </div>
       </a>
+      @endcan
     </div>
 
     <div>
       <p class="text-gray-400 uppercase text-xs mb-2">Settings</p>
+      @can('viewAny', \App\Models\User::class) 
       <a href="{{ route('users.index') }}" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-cubes"></i>
           <span>Users</span>
         </div>
       </a>
+      @endcan
+      @can('viewAny', \App\Models\Role::class) 
       <a href="{{ route('roles.index') }}" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-cubes"></i>
           <span>Roles</span>
         </div>
       </a>
+      @endcan
+      @can('viewAny', \App\Models\Permission::class) 
       <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-cubes"></i>
           <span>Permissions</span>
         </div>
       </a>
+      @endcan
     </div>
   </nav>
 
