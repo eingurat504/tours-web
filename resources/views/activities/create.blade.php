@@ -1,16 +1,5 @@
 @extends('layouts.core.base')
 
-@section('title', 'Activities')
-
-@section('breadcrumb')
-    <h1 class="page-title">Activities</h1>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('activities.index') }}">Activities</a></li>
-        <li class="breadcrumb-item active">Create</li>
-    </ol>
-@endsection
-
 @section('content')
 <h6 class="text-xl font-bold mb-4">CREATE</h6>
 <form method="POST" action="{{ route('activities.store') }}">
@@ -57,6 +46,5 @@
         </div>
     </div>
 </form>
-
 @endsection
 

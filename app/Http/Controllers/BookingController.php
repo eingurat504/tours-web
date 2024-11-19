@@ -161,7 +161,7 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Booking  $booking
+     * @param int $booking
      * @return \Illuminate\Http\Response
      */
     public function showConfirm(Request $request, $booking)
@@ -192,7 +192,7 @@ class BookingController extends Controller
     /**
      * Show edit page
      *
-     * @param  \App\Models\Booking  $booking
+     * @param  int $booking
      * @return \Illuminate\Http\Response
      */
     public function edit($booking)
@@ -211,10 +211,10 @@ class BookingController extends Controller
 
 
        /**
-     * Update .
+     * Update Booking .
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Booking  $booking
+     * @param  int  $booking
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $booking)
@@ -321,18 +321,6 @@ class BookingController extends Controller
 
 
     /**
-     * Remove booking.
-     *
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Booking $booking)
-    {
-        //
-    }
-
-
-        /**
      * Generate Booking Number.
      *
      * @param int $length Desired password length

@@ -81,7 +81,6 @@ class RoleController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'sometimes',
         ]);
 
         $role = new Role();

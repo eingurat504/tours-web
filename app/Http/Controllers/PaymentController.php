@@ -18,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index(PaymentsDataTable $dataTable)
     {
-        $this->authorize('View Payments', [Payment::class]);
+        $this->authorize('viewAny', [Payment::class]);
 
         return $dataTable->render('payments.index');
     }
