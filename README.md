@@ -73,6 +73,7 @@ This web application allows users to browse and book activities, manage reservat
 
 
 6. Run Database Migrations and Seeders
+
   Run migrations to set up the database schema and seeders to populate the initial data:
 
    ```bash
@@ -87,7 +88,9 @@ This web application allows users to browse and book activities, manage reservat
 ## Usage
 
 Access the Application
+
 Once the server is running, you can access the application at:
+
     http://localhost:8000
 
 ## Default Admin Credentials
