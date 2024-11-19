@@ -66,4 +66,10 @@ This web application allows users to browse and book activities, manage reservat
     DB_USERNAME=your_database_user
     DB_PASSWORD=your_database_password
 
+5. Generate Application Key
+Run the following command to generate the application key:
+   ```bash
+    php artisan key:generate
+
+
 
