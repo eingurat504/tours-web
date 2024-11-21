@@ -168,7 +168,7 @@ class PermissionsDataTable extends DataTable
 
         $actions = ' ';
 
-        if (Auth::user()->can('Edit Permiissions')) {
+        if (Auth::user()->can('Update Permissions')) {
             $actions .= '
             <li>
                 <a href="' . $routes['edit'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">

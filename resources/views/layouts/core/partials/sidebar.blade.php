@@ -5,7 +5,7 @@
       <div class="bg-indigo-500 rounded-full w-8 h-8 flex items-center justify-center">
         <i class="fas fa-chart-bar"></i>
       </div>
-      <span class="text-2xl font-bold">TailAdmin</span>
+      <span class="text-2xl font-bold">TOURS WEB</span>
     </div>
   </div>
 

@@ -8,6 +8,10 @@
 @section('content')
   <h6 class="text-xl font-bold mb-4">LIST VIEW</h6>
 
+  <div class="mt-12">
+      @include('flash::message')
+   </div>
+
   <div class="mt-6 bg-white p-4 rounded shadow-md">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold">Payments</h2>
