@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\DataTables\PermissionsDataTable;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -52,10 +53,9 @@ class PermissionController extends Controller
     public function create()
     {
 
-        // $this->authorize('create', [Permission::class]);
+        $this->authorize('create', [Permission::class]);
     
         return view('permissions.create',[
-            // 'roles' => $roles
         ]);
 
     }
@@ -71,7 +71,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
 
-        // $this->authorize('create', [Permission::class]);
+        $this->authorize('create', [Permission::class]);
 
         $this->validate($request, [
             'name' => 'required',
@@ -80,10 +80,9 @@ class PermissionController extends Controller
 
         $permission = new Permission();
         $permission->name = $request->name;
-        $permission->description = $request->description;
         $permission->save();
 
-        // flash("{$permission->name} created.")->success();
+        flash("{$permission->name} created.")->success();
 
         return redirect()->route('permissions.index');
 
@@ -118,7 +117,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $permissionId)
     {
-        // $this->authorize('update', [Permission::class, $permissionId]);
+        $this->authorize('update', [Permission::class, $permissionId]);
 
         $this->validate($request, [
             'name' => 'sometimes',
@@ -150,7 +149,7 @@ class PermissionController extends Controller
      */
     public function destroy($permissionId)
     {
-        // $this->authorize('delete', [Permission::class]);
+        $this->authorize('delete', [Permission::class]);
 
         $permission = Permission::findOrFail($permissionId);
 

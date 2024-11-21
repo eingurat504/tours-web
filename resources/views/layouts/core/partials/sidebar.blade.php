@@ -91,7 +91,7 @@
       </a>
       @endcan
       @can('viewAny', \App\Models\Permission::class) 
-      <a href="#" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
+      <a href="{{ route('permissions.index') }}" class="flex items-center justify-between py-2 px-4 rounded hover:bg-gray-700">
         <div class="flex items-center space-x-3">
           <i class="fas fa-cubes"></i>
           <span>Permissions</span>
