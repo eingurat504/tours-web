@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -10,54 +11,74 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Auth\Access\HandlesAuthorization;
+use illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PermissionsDataTable extends DataTable
 {
+
+
+        /**
+     * Currently authenticated user.
+     *
+     * @var \Illuminate\Contracts\Auth\Access\Authorizable
+     */
+    protected $user;
+
+    // protected $request;
+
+        /**
+     * Constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->user = $request->user();
+   
+    }
+    
     /**
      * Build DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable($query)
     {
-        return (new EloquentDataTable($query))
-        ->editColumn('created_at', function ($request) {
-            return $request->created_at->format('Y-m-d H:i:s'); // human readable format
-        })
-        ->editColumn('updated_at', function ($request) {
-            return $request->updated_at->format('Y-m-d H:i:s'); // human readable format
-        })
-        ->addColumn('actions', function ($permission) {
-            $actions = $this->buildActions($permission);
+        return datatables()
+                ->eloquent($query)
+                ->editColumn('created_at', function ($request) {
+                    return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+                })
+                ->editColumn('updated_at', function ($request) {
+                    return $request->updated_at->format('Y-m-d H:i:s'); // human readable format
+                })
+                ->addColumn('actions', function ($permission) {
+                    $actions = $this->buildActions($permission);
 
-            return '
-            <div class="dropdown show">
-                <div class="text-muted" data-toggle="dropdown">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-more-horizontal">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="19" cy="12" r="1"></circle>
-                        <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
-                </div>
-                <div class="dropdown-menu">'.$actions.'</div>
-            </div>';
-        })
-        ->rawColumns(['actions']);
+                    return '
+                        <ul class="flex gap-2 list-none mb-0">
+                           '.$actions.'
+                        </ul>';
+                })
+                ->rawColumns(['actions']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Permission $model
+     * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Permission $model): QueryBuilder
+    public function query(Permission $permission)
     {
-        return $model->newQuery();
+        $query = $permission->newQuery();
+
+        return $query;
     }
 
     /**
@@ -67,13 +88,28 @@ class PermissionsDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
+
         return $this->builder()
                     ->setTableId('permissions-table')
                     ->columns($this->getColumns())
+                    ->language([
+                        'emptyTable' => "No Permissions available",
+                        'info' => "Showing _START_ to _END_ of _TOTAL_ Permissions",
+                        'infoEmpty' => "Showing 0 to 0 of 0 Permissions",
+                        'infoFiltered' => "(filtered from _MAX_ total Permissions)",
+                        'infoPostFix' => "",
+                        'thousands' => ",",
+                        'lengthMenu' => "Show _MENU_ Permissions",
+                        'search' => 'Search Permissions:',
+                        'zeroRecords' => 'No Permissions match search criteria'
+                    ])
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
+                    ->orderBy(4, 'desc')
+                    ->responsive()
+                    ->parameters([
+                        "responsive" => true,
+                        'buttons' => ['excel', 'print', 'pdf'],
+                    ])
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -91,17 +127,16 @@ class PermissionsDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-            Column::computed('actions')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
+        return [    
             Column::make('name'),
-            Column::make('amount'),
+            Column::make('guard_name'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('actions')
+            ->exportable(false)
+            ->printable(false)
+            ->width(60)
+            ->addClass('text-center')
         ];
     }
 
@@ -112,10 +147,10 @@ class PermissionsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'permissions_' . date('YmdHis');
+        return 'Permissions_' . date('YmdHis');
     }
 
-            /**
+        /**
      * Build actions.
      *
      * @param $resource
@@ -128,53 +163,21 @@ class PermissionsDataTable extends DataTable
         }*/
 
         $routes = [
-            'view' => route('permissions.show', $permission->id),
-            'edit' => route('permissions.edit', $permission->id),
-            // 'destroy' => route('projects.projects.destroy',$project->id),
+            'edit' => route('permissions.edit',$permission->id),
         ];
 
-        $actions = '';
+        $actions = ' ';
 
-        // if ($this->user->can('view permissions')) {
+        if (Auth::user()->can('Edit Permiissions')) {
             $actions .= '
-            <a class="dropdown-item d-flex" href="' . $routes['view'] . '">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-eye">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                <span class="ml-2">View<span>
-            </a>';
-        // }
-
-        // if ($this->user->can('update permissions')) {
-            $actions .= '
-            <a class="dropdown-item d-flex" href="' . $routes['edit'] . '">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-edit">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-                <span class="ml-2">Edit</span>
-            </a>';
-        // }
-
-        // if ($this->user->can('delete permissions')) {
-        //     $actions .= '
-        //      <a class="dropdown-item d-flex" href="#" data-id="'.$permission->id.'"
-        //          data-title="'.$permission->title.'" data-route="'.$routes['destroy'].'"
-        //          data-toggle="modal" data-target="#destroy-entity-modal">
-        //          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-        //              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-        //              class="feather feather-trash">
-        //              <polyline points="3 6 5 6 21 6"></polyline>
-        //              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-        //          </svg>
-        //          <span class="ml-2">Delete</span>
-        //      </a>';
-        // }
+            <li>
+                <a href="' . $routes['edit'] . '" class="bg-indigo-600 text-white px-2 py-1 rounded-md flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 15l3.536 3.536 7.071-7.071-3.536-3.536L9 15zM4 20l4-1-3-3-1 4z" />
+                    </svg>
+                </a>
+            </li>';
+        }
 
         return $actions;
     }
