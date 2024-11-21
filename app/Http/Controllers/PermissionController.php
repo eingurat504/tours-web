@@ -121,13 +121,11 @@ class PermissionController extends Controller
 
         $this->validate($request, [
             'name' => 'sometimes',
-            'description' => 'sometimes',
         ]);
 
         $permission = Permission::findOrfail($permissionId);
 
         $permission->name = $request->name;
-        $permission->description = $request->description;
         $permission->save();
 
         flash("{$permission->name} updated.")->success();
