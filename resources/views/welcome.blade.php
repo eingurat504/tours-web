@@ -15,14 +15,13 @@
         <div class="fixed inset-0 flex items-center justify-center z-50">
         
         <div class="bg-white rounded-lg shadow-lg p-8 w-96">
-            <h2 class="text-2xl font-semibold mb-4 text-center">TOURS MGT</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-center">BookingWeb</h2>
 
             <div class="mb-4 text-center">
                 <a href="{{ route('login') }}" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Login</a>
             </div>
      
         </div>
-
     </div>
     </div>
   </div>
